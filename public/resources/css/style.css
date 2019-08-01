@@ -1,0 +1,160 @@
+.layout-headerPlaceholder {
+    position: absolute;
+    width: 100%;
+    height: 70px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.headerWidget {
+    display: table;
+    height: 70px;
+    font-family: Arial;
+}
+
+.headerWidget-left {
+    display: table-cell;
+}
+
+.headerWidget-logoContainer {
+    padding: 5px 10px;
+}
+
+.headerWidget-logo {
+    vertical-align: top;
+    height: 60px;
+}
+
+.headerWidget-right {
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+}
+
+.headerWidget-navigationBar {
+    margin-bottom: 5px;
+    background: #efefef;
+}
+
+.headerWidget-bar {
+    padding-right: 5px;
+}
+
+.headerWidget-navigationBarTable {
+    height: 30px;
+}
+
+.headerWidget-barTable {
+    display: table;
+    width: 100%;
+}
+
+.headerWidget-navigationBarTable .headerWidget-barCell {
+    padding-left: 10px;
+}
+
+.headerWidget-leftLinksContainer {
+    width: 100%;
+}
+
+.headerWidget-barCell {
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.headerWidget .dropdownMenuWidget {
+    display: table;
+}
+
+.dropdownMenuWidget-item {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0px 10px;
+    white-space: nowrap;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "fontello";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    margin-left: .2em;
+}
+
+.icon-menu::before {
+    content: "iii";
+}
+
+.dropdownMenuWidget-item a {
+    color: #303030;
+    text-decoration: none;
+}
+
+.dropdownMenuWidget-itemDropdown {
+    position: absolute;
+    z-index: 1000;
+    min-width: 120px;
+}
+
+.headerWidget .dropdownMenuWidget-dropdownMenu {
+    margin-top: 7px;
+}
+
+.dropdownMenuWidget-dropdownMenu {
+    background: white;
+    border: 1px solid #efefef;
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.dropdownMenuWidget-dropdownMenuItem {
+    display: block;
+    border-bottom: 1px solid #efefef;
+    padding: 5px 10px;
+}
+
+li {
+    text-align: -webkit-match-parent;
+}
+
+.dropdownMenuWidget-dropdownMenuItem a {
+    width: 100%;
+    display: block;
+}
+
+
+.dropdownMenuWidget-item a {
+    color: #303030;
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+

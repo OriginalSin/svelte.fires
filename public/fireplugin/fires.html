@@ -1,0 +1,65 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <script src="http://maps.kosmosnimki.ru/api/gmxcore.js"></script>
+
+    <link rel="stylesheet" href="../../CommonStyles/build/styles.css"/>
+    <link rel="stylesheet" href="../build/CalendarWidget.css"/>
+    <link rel="stylesheet" href="fireplugin/FirePlugin.css"/>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+
+    <script src="http://maps.kosmosnimki.ru/api/translations.js"></script>
+
+    <script src="../build/CalendarWidget.js"></script>
+    
+    <script src="../../DateInterval/DateInterval.js"></script>
+    
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script src="../../Leaflet-GeoMixer/dist/leaflet-geomixer-src.js"></script>
+</head>
+
+<body>
+
+<div id="calendar"></div>
+<div id="fire"></div>
+<div id="map" style="width: 400px; height: 400px"></div>
+
+<script>
+    $(function() {
+        gmxCore.loadModule('FirePlugin', 'fireplugin/FirePlugin.js').then(function(FireModule) {
+            var dateInterval = new nsGmx.DateInterval({dateBegin: new Date(2011, 7, 10), dateEnd: new Date(2011, 7, 20)});
+            var calendar = window._calendar = new nsGmx.FireCalendarWidget({
+                dateInterval: dateInterval,
+                name: 'test',
+                container: 'calendar',
+                dateFormat: 'mm-dd-yy',
+                dateMin: new Date(2011, 7, 1),
+                dateMax: new Date(2011, 7, 31),
+                minimized: false,
+                showSwitcher: true
+            });
+            
+            dateInterval.on('change', function() {
+                console.log('change', dateInterval.get('dateBegin'), dateInterval.get('dateEnd'));
+            })
+            
+            $(calendar).on('modechange', function() {
+                console.log('modechange', calendar.getMode());
+            })
+
+            var map = L.map('map', {center: [0, 0], zoom: 2});
+            var fireControl = new FireModule.FireControl2(map, {dateInterval: dateInterval});
+        })
+    })
+</script>
+
+</body>
+</html>

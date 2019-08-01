@@ -1,0 +1,191 @@
+<div class="TreeView" on:click="chkEvent(event)">
+	<LineNode line={rawTree} parentProps={rawTree.content.properties} bind:layersTree bind:gmxTimeline />
+</div>
+ 
+
+<style>
+.TreeView {
+    position: absolute;
+	width: 358px;
+    overflow-y: scroll;
+	background-color: white;
+}
+</style>
+
+<script>
+	import LineNode from './LineNode.html';
+	let regs = {
+		cmd: /cmd:(\w+)/,
+		id: /id:(\w+)/
+	}
+	export default {
+		data() {
+			return {
+				config: {},
+				layersTree: {
+					visible: {},
+					expanded: {}
+				},
+				//gmxTimeline: false,
+				group: null,
+				rawTree: null
+			}
+		},
+
+		methods: {
+			chkEvent(ev) {
+				let target = ev.target,
+					className = target.className,
+					arr = regs.cmd.exec(className);
+
+				if (arr && arr.length === 2) {
+					let out = {
+						cmd: arr[1],
+						type: ev.type,
+						originalEvent: ev
+					};
+					for(let i = 0; i < 10; i++) {
+						if (target.classList.contains('line')) {
+							out.nodeType = target.classList.contains('layer') ? 'layer' : 'group';
+							out.id = this._getId(target.className);
+							out.target = target;
+							break;
+						}
+						target = target.parentNode;
+					}
+					if (out.id) {
+						this.treeCommands(out);
+						this.fire('command', out);
+					}
+				}
+			},
+
+			_getId(className) {
+				let arr = regs.id.exec(className);
+				return arr && arr.length === 2 ? arr[1] : '';
+			},
+			_isExistVisible(node, layersTree) {
+				let cnt = 0,
+					len = node.children.length; 
+				for(let i = 0; i < len; i++) {
+					let it = node.children[i],
+						id = this._getId(it.className);
+					if (layersTree.visible[id]) {
+						cnt++;
+					}
+				}
+				return cnt === 0 ? 0 :		// notVisibleLayers
+					(cnt === len ? 1 :		// allVisibleLayers
+					0.5);					// existsVisibleLayers
+			},
+
+			_toggleParents(node, visible, layersTree) {
+				let flag = true;
+				while(flag) {
+					node = node.parentNode
+					if (node.classList.contains('line')) {
+						let id = this._getId(node.className);
+						if (id) {
+							layersTree.visible[id] = visible;
+						}
+					} else if (node.classList.contains('group')) {
+						if (!visible && this._isExistVisible(node, layersTree)) {
+							flag = false;
+						}
+					} else {
+						flag = false;
+					}
+				};
+			},
+
+			_uncheckRadio(node, id, layersTree) {
+				for(let i = 0, len = node.children.length; i < len; i++) {
+					let it = node.children[i],
+						pid = this._getId(it.className);
+					if (pid !== id) {
+						this.fire('command', { id: pid, set: false, cmd: 'toggleNode' });
+						// layersTree.expanded[pid] = ph.set;
+						layersTree.visible[pid] = false;
+					}
+				}
+			},
+
+			_iterateNodeChilds(node, visible, layersTree) {
+				let id = this._getId(node.className),
+					isGroup = node.classList.contains('group'),
+					ul = node.getElementsByTagName('ul')[0];
+
+				layersTree.visible[id] = visible;
+				if (isGroup) {
+					layersTree.expanded[id] = visible;
+				} else {
+					this.fire('command', { id: id, set: visible, cmd: 'toggleNode' });
+				}
+				if (ul) {
+					let isRadio = ul.classList.contains('radio'),
+						flag = visible;
+					for(let i = 0, len = ul.children.length; i < len; i++) {
+						let it = ul.children[i],
+							pid = this._getId(it.className);
+						if (isRadio && i) { flag = false; }
+						this._iterateNodeChilds(it, flag, layersTree);
+					}
+				}
+			},
+
+			treeCommands(attr) {
+				let {layersTree, rawTree} = this.get(),
+					id = attr.id,
+					isGroup = attr.nodeType === 'group',
+					// expanded = attr.nodeType ? layersTree.expanded : layersTree.visible,
+					isExpanded = !layersTree.expanded[id],
+					isVisible = !layersTree.visible[id],
+					options = layersTree.options[id] || {},
+					ph = {
+						cmd: 'toggleNode',
+						type: attr.type,
+						nodeType: attr.nodeType,
+						originalEvent: attr.originalEvent
+					};
+
+				// console.log('treeCommands', attr.cmd, attr.nodeType);
+
+				if (attr.cmd === 'clickOnExpander') {
+					layersTree.expanded[id] = !layersTree.expanded[id];
+					this.set({layersTree: layersTree});
+				} else if (attr.cmd === 'toggleGroup') {
+					this._iterateNodeChilds(attr.target, isVisible, layersTree);
+					this._toggleParents(attr.target, isExpanded, layersTree);
+
+					this.set({layersTree: layersTree});
+				} else if (attr.cmd === 'toggleVisibility') {
+					let node = attr.target,
+						isGroup = node.getElementsByClassName('expanderInput')[0],
+						expanded = isGroup ? layersTree.expanded : layersTree.visible,
+						ul = node.parentNode;
+
+					if (expanded[id]) {
+						delete expanded[id];
+					} else {
+						expanded[id] = true;
+					}
+					if (ul && ul.classList.contains('radio')) {
+						this._uncheckRadio(ul, id, layersTree);
+					}
+					this._toggleParents(attr.target, expanded[id], layersTree);
+					this.set({layersTree: layersTree});
+					return true;
+				}
+				return false;
+			},
+
+			appendNode(id) {
+				this.options.appendNode(id);
+			}
+		},
+		components: {
+			LineNode
+		}
+	}
+
+</script>

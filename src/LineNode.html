@@ -1,0 +1,285 @@
+<li class="line cmd:toggleIcons id:{nodeID} {line.type}" ref:line>
+<div class="mega">
+{#if properties}
+ {#if line.type !== 'map'}
+	{#if line.type === 'group'}
+	<input class="expander expanderInput hidden" type="checkbox" checked="{isOpened}" ref:expander />
+	<span class="expander pointer expanderCont cmd:clickOnExpander" on:click="clickOnExpander(this)"></span>
+	{/if}
+		{#if line.type === 'layer'} <!-- begin: line.type === 'layer' -->
+			{#if properties.styles.length > 1}
+	<span class="cont-overlays"><svg role="img" class="svgIcon"><use xlink:href="#overlays" href="#overlays"></use></svg></span>
+			{/if}
+	<span class="icons ">
+
+		{#if gmxTimeline && properties.Temporal && (properties.IsRasterCatalog || (properties.Quicklook && properties.Quicklook !== 'null'))}
+		<span class="pointer cmd:toggleTimeline cont-timeline disabled" title="Добавить на таймлайн" on:click="toggleTimeline(this)"></span>
+		{/if}
+		
+		{#if isInfo}
+		<span class="pointer cmd:showInfo cont-info" title="Метаданные слоя"></span>
+		{/if}
+ 		<span class="pointer cmd:fitBounds cont-center"  title="Позиционировать"></span>
+			
+		
+	</span>
+		{/if} <!-- end: line.type === 'layer' -->
+ {/if}
+ {#if line.type !== 'map'}
+	<span class="cont">
+		{#if line.type === 'group'}
+			{#if properties.ShowCheckbox}
+				<input class="check visibility pointer cmd:toggleGroup {line.type} id:{nodeID}" name="{checkboxName}" type="{checkboxType}" checked="{isGroupVisible}" />
+			{/if}
+		{:else}
+			<input class="check visibility pointer cmd:toggleVisibility {line.type} id:{nodeID}" name="{checkboxName}" type="{checkboxType}" checked="{isVisible}" />
+		{/if}
+		{#if line.type === 'layer' && styles.length && styles.length < 2 && styles[0].RenderStyle}
+			<LegendIconCell item={styles[0]} type={properties.GeometryType} />
+		{/if}
+		<label class="pointer title 
+			{!isGroup ? ' cmd:toggleVisibility' : (isShowCheckbox ? ' cmd:toggleGroup' : '')}
+			{multiStyles}
+			"
+			on:click="clickOnExpander(this)"
+			>{properties.title}</label>
+		<div class="description {properties.description ? '' : 'collapse'}">{@html properties.description || ''}</div>
+		{#if line.type === 'layer'}
+			{#if styles.length && styles.length > 1 && styles[0].RenderStyle}
+			<div class="legend">
+				<div class="legend-cont">
+				{#each styles as it}
+					<div class="gmx-style-legend">
+						<span class="legendIconEye enabled pointer cmd:toggleStyle"></span>
+						<LegendIconCell item={it} type={properties.GeometryType} />
+						<span class="styleName">{it.Name}</span>
+					</div>
+				{/each}
+				</div>
+			</div>
+			{/if}
+		{/if}
+	</span>
+  {/if}
+{/if}
+</div>
+
+{#if line.content.children}
+	<ul class="group css-treeview id_{nodeID} {isOpened || isRoot ? '' : 'collapse'} {isRadio}" ref:ul>
+	{#each line.content.children || [] as child}
+		<svelte:self line={child} parentProps={line.content.properties} bind:layersTree bind:gmxTimeline />
+	{/each}
+	</ul>
+{/if}
+</li> 
+
+<script>
+
+	import LegendIconCell from './LegendIconCell.html';
+
+	export default {
+		data() {
+			return {
+				//gmxTimeline: false,
+				line: null
+			}
+		},
+		// helpers: {
+		// },
+		computed: {
+			checkboxType: ({ parentProps }) => parentProps && parentProps.list ? 'radio' : 'checkbox',
+			checkboxName: ({ parentProps }) => parentProps && parentProps.GroupID || '',
+			properties: ({ line }) => line.content.properties,
+			isGroup: ({ line }) => line.type === 'group',
+			isShowCheckbox: ({ properties }) => properties.ShowCheckbox,
+			isInfo: ({ properties }) => properties.MetaProperties && Object.keys(properties.MetaProperties).length,
+			isRadio: ({ properties }) => properties.list ? 'radio' : 'checkbox',
+			nodeID: ({ properties }) => properties ? properties.name || properties.GroupID : 'root',
+			styles: ({ properties }) => properties.gmxStyles ? properties.gmxStyles.styles : [],
+			multiStyles: ({ properties }) => properties.gmxStyles && properties.gmxStyles.styles.length > 1 ? 'multiStyles' : '',
+			isRoot: ({ properties }) => properties.MapID,
+			isOpened: ({line, layersTree}) => {
+				let content = line.content,
+					props = content.properties,
+					nodeID = props.GroupID || 'root';
+				return layersTree.expanded[nodeID];
+			},
+			isGroupVisible: ({line, layersTree}) => {
+				let content = line.content,
+					props = content.properties,
+					nodeID = props.GroupID || 'root';
+				return layersTree.visible[nodeID];
+			},
+			isVisible: ({line, layersTree}) => {
+				return layersTree.visible[line.content.properties.name];
+			}
+		},
+		components: {
+			LegendIconCell
+		},
+		methods: {
+			clickOnExpander(target) {
+				let {line} = this.get();
+				
+				if (line.type === 'group' && !line.content.properties.ShowCheckbox) {
+					let node = this.refs.ul;
+					if (node) {
+						let isCollapse = node.classList.contains('collapse'),
+							expander = this.refs.expander;
+						if (isCollapse) {
+							node.classList.remove('collapse');
+							expander.checked = true;
+						} else {
+							node.classList.add('collapse');
+							expander.checked = false;
+						}
+					}
+				}
+			},
+			toggleTimeline(node) {
+				if (node) {
+					if (node.classList.contains('disabled')) {
+						node.classList.remove('disabled');
+						node.classList.add('enabled');
+					} else {
+						node.classList.add('disabled');
+						node.classList.remove('enabled');
+					}
+				}
+			},
+			showInfo(target) {
+				let node = target.parentNode.nextElementSibling.getElementsByClassName('description')[0];
+				if (node) {
+					if (node.classList.contains('collapse')) {
+						let {line} = this.get();
+						node.innerHTML = line.content.properties.description || '';
+						node.classList.remove('collapse');
+					} else {
+						node.classList.add('collapse');
+					}
+				}
+			}
+		}
+	}
+</script>
+
+
+<style>
+
+ul {
+	padding-inline-start: 12px;
+}
+li {
+	list-style: none;
+    text-overflow: ellipsis;
+    white-space: initial;
+    overflow-x: inherit;
+	width: 100%;
+}
+li.line > .icons span.cont-center {
+	visibility: visible;
+}
+li.line:hover > .icons span.cont-center {
+	visibility: visible;
+}
+li.line:hover > .cont label.title {
+	font-weight: normal;
+}
+
+svg {
+	pointer-events: none;
+}
+
+svg {
+    height: 14px;
+    width: 14px;
+}
+.timeline {
+    position: absolute;
+    top: -3px;
+    left: 2px;
+}
+.timeline.disabled {
+	fill: #999999;
+}
+.timeline.enabled {
+	fill: #45B0D8;
+}
+
+.pointer {
+    cursor: pointer;
+}
+.expanderInput {
+	display: initial;
+	position: relative;
+	right: 17px;
+	top: 0;
+}
+.expanderCont {
+    position: relative;
+	top: -5px;
+}
+.legend {
+	padding-left: 20px;
+    display: none;
+}
+.legend-cont {
+	float: left;
+	background: #FFF;
+    top: 3px;
+
+}
+
+input.check.visibility:checked ~ .legend {
+    display: block;
+	clear: both;
+}
+.gmx-style-legend .legendIconCell.style {
+    top: 0px;
+    position: relative;
+}
+.gmx-style-legend .legendIconCell {
+    width: 100%;
+}
+.legendIconEye {
+	display: inline-block;
+}
+.legendIconEye > .off {
+    position: relative;
+}
+.legendIconEye.enabled > .on, .legendIconEye > .off {
+    display: inline-block;
+}
+.legendIconEye > .on, .legendIconEye.enabled > .off {
+    display: none;
+}
+
+:global(.collapse) {
+    display: none;
+}
+
+span.cont-overlays {
+    position: relative;
+    left: 26px;
+    padding-top: 2px;
+}
+span.icons {
+	z-index: 1;
+    right: 8px;
+    position: relative;
+    /*position: absolute;*/
+}
+.hidden {
+    visibility: hidden;
+}
+
+.styleName {
+    position: relative;
+    bottom: 4px;
+    z-index: 2;
+    font-size: 12px;
+
+}
+
+
+</style>

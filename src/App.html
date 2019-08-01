@@ -1,0 +1,313 @@
+{#if urlParams.edit}
+<div class="editor-sidebarContainer editor_sidebarExpanded">
+	<div class="sidebarPanel">
+		<div class="sidebarPanel-toolbarContainer">
+			<div class="dropdownMenuWidget">
+{#each dropdownMenu as it}
+				<div class="dropdownMenuWidget-item{it.checked ? ' checked' : ''}" on:click="checkMe(it, this)">
+					<i class="icon-{it.name}"></i>
+					<span>{it.title}</span>
+				</div>
+{/each}
+			</div>
+		</div>
+			<div id="editor" class="editor"></div>
+	</div>
+</div>
+{/if}
+<div class="editor-viewerContainer editor_sidebarExpanded">
+	<Map permalink={permalink} bind:map />
+</div>
+{#if share}
+<Share conf={conf} />
+{/if}
+
+{#if permalink && permalink.app && permalink.app.gmxTimeline}
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+  
+      <clippath id="clip-path"><rect x="0" y="0" width="13" height="13"/></clippath>
+  </defs>
+    <symbol id="timeline-icon" viewbox="0 0 13 13">
+      <title>gmxTimeline</title>
+	<path d="M6.5,0C2.9,0,0,2.9,0,6.5S2.9,13,6.5,13S13,10.1,13,6.5S10.1,0,6.5,0z M9.8,7.3H5.7V3.3h1.6v2.4h2.4V7.3z"/>
+    </symbol>
+</svg>
+{/if}
+
+
+<script>
+	const serverBase = window.serverBase || '//maps.kosmosnimki.ru/',
+		chkPar = (key, h1, h2, zn) => h1[key] || (key in h2 ? h2[key] : zn || true);
+
+	import Map from './Map.html';
+	import Share from './Share.html';
+	export default {
+		data() {
+			return {
+				share: false,
+				conf: '',
+				urlParams: {},
+				dropdownMenu: [
+					{ name: 'refresh', title: 'Refresh' },
+					{ name: 'link', title: 'Share', checked: false }
+				],
+				map: null,
+				permalink: null
+			}
+		},
+		methods: {
+			checkMe(it, node) {
+				let cmd = it.name,
+					json = this.editor.getValue(),
+					out = null;
+				try {
+					out = JSON.parse(json);
+				} catch (err) {
+					let error = this.editor.getSession().getAnnotations()[0];
+					alert('Ошибка в конфигурации:\n строка: ' + error.row + '\n позиция: ' + error.column + '\n сообщение: ' + error.text);
+					console.log('error in json: ' , error);
+				}
+				if (out) {
+					if (cmd === 'refresh') {
+						this.set({permalink: out});
+					} else if (cmd === 'link') {
+						let {share} = this.get();
+						if (share) {
+							node.classList.remove('checked');
+							this.set({share: false});
+						} else {
+							node.classList.add('checked');
+							fetch(serverBase + 'TinyReference/Create.ashx', {
+								method: 'post',
+								headers: {'Content-type': 'application/x-www-form-urlencoded'},
+								body: L.gmxUtil.getFormData({WrapStyle: 'None', content: out}),
+								mode: 'cors',
+								credentials: 'include'
+							})
+							.then(res => res.json())
+							.then(json => {
+								if (json.Status === 'ok') {
+									this.set({share: true, conf:json.Result});
+								}
+							})
+							.catch(console.error);
+						}
+					}
+				}
+			},
+			checkPermalink(out) {
+				let {urlParams} = this.get();
+				// console.log('?config=7ZSC4  dddddddd', out, urlParams)
+				if (out.app) {
+					out.app.theme = chkPar('theme', urlParams, out.app, 'dark');		// тема по умолчанию
+					out.app.iconSidebar = chkPar('iconSidebar', urlParams, out.app);	// iconSidebar по умолчанию
+					out.app.treeView = chkPar('treeView', urlParams, out.app);			// treeView по умолчанию
+					out.app.iconLayers = chkPar('iconLayers', urlParams, out.app);		// iconLayers по умолчанию
+					out.app.drawing = chkPar('drawing', urlParams, out.app);			// drawing по умолчанию
+					//out.app.gmxTimeline = chkPar('gmxTimeline', urlParams, out.app);	// gmxTimeline по умолчанию
+					out.app.gmxTimeline = urlParams.gmxTimeline === 'true' || out.app.gmxTimeline || false;	// gmxTimeline по умолчанию false
+					out.app.GWWFPlugin = urlParams.GWWFPlugin === 'true' || out.app.GWWFPlugin || false;	// GWWFPlugin по умолчанию false
+				}
+				let plugins = out.plugins || {};
+				if (out.app.GWWFPlugin && !plugins.GWWFPlugin) {
+					plugins.GWWFPlugin = {
+					  "pluginName": "WWF Plugin new",
+					  "file": "//maps.kosmosnimki.ru/api/plugins/external/GMXPluginWWF/gmxPluginWWF.js",
+					  "module": "GWWFPlugin",
+					  "mapPlugin": true,
+					  "isPublic": true
+					};
+				}
+
+				if (plugins.GWWFPlugin) {
+					L.gmxUtil.requestLink(plugins.GWWFPlugin.file.replace(/\.js$/, '\.css'));
+					L.gmxUtil.requestLink(plugins.GWWFPlugin.file, {
+					}).then(() => {
+						out.plugins = plugins;
+						this.set({permalink: out});
+					}).catch(console.warn);
+				// } else {
+					// this.set({permalink: out});
+				}
+
+				//this.set({permalink: out});
+				// this.set({permalink: out, confStr: JSON.stringify(out, null, 2)});
+				if (urlParams.edit) {
+					L.gmxUtil.requestLink('//cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js', {
+						// integrity: 'sha256-kCykSp9wgrszaIBZpbagWbvnsHKXo4noDEi6ra6Y43w=',
+						// crossorigin: 'anonymous'
+					}).then(() => {
+						var editor = ace.edit("editor");
+						editor.setTheme("ace/theme/monokai");
+						// editor.session.setMode("ace/mode/json");
+						editor.getSession().setMode("ace/mode/json");
+
+ // editor.setOptions({
+    // mode: "ace/mode/json",
+    // theme: "ace/theme/monokai",
+    // fontSize: "10pt",
+    // showPrintMargin : false,
+    // enableBasicAutocompletion: true,
+    // enableSnippets: true,
+    // enableLiveAutocompletion: true,
+    // wrap: true,
+    // scrollPastEnd: true,
+    // displayIndentGuides: true,
+  // });
+						// editor.session.setMode("ace/mode/javascript");
+						editor.container.getElementsByClassName('ace_scrollbar-v')[0].style.width = '4px';
+						editor.setValue(JSON.stringify(out, null, 2))
+						this.editor = editor;
+						// window.ted = editor;
+					}).catch(console.warn);
+
+				}
+				if (out.app.gmxTimeline && out.app.gmxTimeline !== 'false') {
+					L.gmxUtil.requestLink('//maps.kosmosnimki.ru/api/plugins/timeline/2.9.1/timeline.js');
+					L.gmxUtil.requestLink('//maps.kosmosnimki.ru/api/plugins/timeline/2.9.1/timeline.css');
+					// L.gmxUtil.requestLink('L.Control.gmxTimeLine.js');
+					L.gmxUtil.requestLink('//maps.kosmosnimki.ru/api/plugins/external/GMXPluginTimeLine/L.Control.gmxTimeLine.css');
+
+					L.gmxUtil.requestLink('//maps.kosmosnimki.ru/api/plugins/external/GMXPluginTimeLine/L.Control.gmxTimeLine.js', {
+					}).then(() => {
+						out.plugins = plugins;
+						this.set({permalink: out});
+					}).catch(console.warn);
+				}
+			},
+			getPermalink(id) {
+				let out = {};
+				if (id) {
+					fetch(serverBase + 'TinyReference/Get.ashx?WrapStyle=None&id=' + id, {
+						mode: 'cors',
+						credentials: 'include'
+					})
+					.then(res => res.json())
+					.then(json => {
+						if (json.Status === 'ok') {
+							out = json.Result ? JSON.parse(json.Result) : {};
+						}
+						this.checkPermalink(out);
+					});
+						// .catch(err => console.log(err));
+				// } else {
+					// setTimeout(function() {
+						// this.checkPermalink(out);
+					// }.bind(this), 0);
+				}
+			}
+		},
+
+		components: {
+			Map,
+			Share
+		},
+
+		onstate({ changed, current, previous }) {
+			// console.log('in onstate', changed, current, previous);
+			if (changed.urlParams) {
+				let pars = L.gmxUtil.searchScriptPars('winnie_2.0.js'),
+					config = pars ? pars.config : pars._glob,
+					conf = current.urlParams.config || config || 'RSO4E';
+				this.getPermalink(conf);
+			}
+		}
+	}
+</script>
+
+<style>
+#editor {
+	height: calc(100% - 40px);
+	top: 40px;
+}
+
+.sidebarPanel {
+    font-family: 'Roboto';
+	height: 100%;
+}
+
+.editor-viewerContainer {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 5;
+  float: left;
+  width: 100%;
+}
+.editor-sidebarContainer .editor-viewerContainer {
+  left: 500px;
+}
+.editor-sidebarContainer {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -webkit-transition: width .5s ease;
+  transition: width .5s ease;
+  z-index: 20;
+}
+
+.editor_sidebarExpanded.editor-sidebarContainer {
+  width: 500px;
+}
+
+.hidden {
+	display: none;
+}
+.dropdownMenuWidget {
+	display: table;
+}
+.dropdownMenuWidget {
+	height:100%
+}
+.dropdownMenuWidget-item {
+	display: table-cell;
+	vertical-align: middle;
+	font-size: 14px;
+	cursor: pointer;
+	padding: 0px 10px;
+	white-space: nowrap;
+	color: #424242;
+}
+.checked, .dropdownMenuWidget-item:hover, .dropdownMenuWidget-item.checked {
+	background:rgba(0, 0, 0, 0.05)
+}
+
+.dropdownMenuWidget.right {
+    right: 0px;
+	padding: 0;
+    margin: 0;
+    position: absolute;
+    background-color: #ebebeb;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    height: 26px;
+}
+
+.sidebarPanel-toolbarContainer {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	height:40px;
+
+	border-right:1px solid #f0f0f0;
+	background-color:#ebebeb;
+	box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+
+	z-index:40
+}
+
+.pointer.title {
+    position: relative;
+    bottom: 4px;
+}
+
+</style>

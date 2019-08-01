@@ -1,0 +1,104 @@
+.layout-headerPlaceholder {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    width: 100%;
+    height: 70px;
+}
+
+.headerWidget {
+    display: table;
+    height: 70px;
+    font-family: 'Scada';
+}
+
+.headerWidget-logoContainer {
+    padding: 5px 10px;
+}
+
+.headerWidget-right {
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+}
+.headerWidget-navigationBar {
+    margin-bottom: 5px;
+    background: #efefef;
+}
+
+.headerWidget-bar {
+    padding-right: 5px;
+}
+
+.headerWidget-navigationBarTable {
+    height: 30px;
+}
+.headerWidget-barTable {
+    display: table;
+    width: 100%;
+}
+
+.headerWidget-navigationBarTable .headerWidget-barCell {
+    padding-left: 10px;
+}
+
+.headerWidget-leftLinksContainer {
+    width: 100%;
+}
+.headerWidget-barCell {
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.headerWidget .dropdownMenuWidget {
+    display: table;
+}
+.headerWidget .ui-widget {
+    font-family: 'Scada';
+}
+.dropdownMenuWidget {
+    display: table;
+}
+.ui-widget {
+    font-family: 'Roboto', Tahoma, Arial, sans-serif;
+    font-size: 11px;
+}
+.ui-widget {
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 11px;
+}
+.dropdownMenuWidget-item {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0px 10px;
+    white-space: nowrap;
+}
+.icon-menu:before {
+    content: '\';
+}
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "fontello";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    /* opacity: .8; */
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    margin-left: .2em;
+    /* font-size: 120%; */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.dropdownMenuWidget-itemDropdown {
+    position: absolute;
+    z-index: 1000;
+    min-width: 120px;
+}

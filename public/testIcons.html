@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset='utf8'>
+	<meta name='viewport' content='width=device-width'>
+
+	<title>Geomixer app</title>
+
+	<link rel="stylesheet" href="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer.css" />
+	<script src="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer-src.js?1508146119421"></script>
+
+<style>
+
+.dark .cont-info {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><rect width="14" height="14" rx="2" fill="rgb(138, 155, 168)"/><path d="M6.9992 4.028C6.6392 4.028 6.3752 3.948 6.2072 3.788C6.0472 3.62 5.9672 3.408 5.9672 3.152V2.888C5.9672 2.632 6.0472 2.424 6.2072 2.264C6.3752 2.096 6.6392 2.012 6.9992 2.012C7.3592 2.012 7.6192 2.096 7.7792 2.264C7.9472 2.424 8.0312 2.632 8.0312 2.888V3.152C8.0312 3.408 7.9472 3.62 7.7792 3.788C7.6192 3.948 7.3592 4.028 6.9992 4.028ZM6.1112 4.7H7.8872V11H6.1112V4.7Z" fill="white"/></svg>');
+}
+.dark .cont-info:hover { 
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><rect width="14" height="14" rx="2" fill="rgb(57, 75, 89)"/><path d="M6.9992 4.028C6.6392 4.028 6.3752 3.948 6.2072 3.788C6.0472 3.62 5.9672 3.408 5.9672 3.152V2.888C5.9672 2.632 6.0472 2.424 6.2072 2.264C6.3752 2.096 6.6392 2.012 6.9992 2.012C7.3592 2.012 7.6192 2.096 7.7792 2.264C7.9472 2.424 8.0312 2.632 8.0312 2.888V3.152C8.0312 3.408 7.9472 3.62 7.7792 3.788C7.6192 3.948 7.3592 4.028 6.9992 4.028ZM6.1112 4.7H7.8872V11H6.1112V4.7Z" fill="white"/></svg>');
+}
+.dark .cont-center {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><path d="M1.75 1.75H5.25V0H0V5.25H1.75V1.75Z" fill="rgb(138, 155, 168)"/><path d="M8.75 0V1.75H12.25V5.25H14V0H8.75Z" fill="rgb(138, 155, 168)"/><path d="M12.25 12.25H8.75V14H14V8.75H12.25V12.25Z" fill="rgb(138, 155, 168)"/><path d="M1.75 8.75H0V14H5.25V12.25H1.75V8.75Z" fill="rgb(138, 155, 168)"/><path d="M10.5 3.5H3.5V10.5H10.5V3.5Z" fill="rgb(138, 155, 168)"/></svg>');
+}
+.dark .cont-center:hover { 
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><path d="M1.75 1.75H5.25V0H0V5.25H1.75V1.75Z"/><path d="M8.75 0V1.75H12.25V5.25H14V0H8.75Z" fill="rgb(57, 75, 89)"/><path d="M12.25 12.25H8.75V14H14V8.75H12.25V12.25Z" fill="rgb(57, 75, 89)"/><path d="M1.75 8.75H0V14H5.25V12.25H1.75V8.75Z" fill="rgb(57, 75, 89)"/><path d="M10.5 3.5H3.5V10.5H10.5V3.5Z" fill="rgb(57, 75, 89)"/></svg>');
+}
+
+.dark .cont-timeline {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><rect style="fill:rgb(138, 155, 168)" width="14" height="14" rx="2"/><path d="M7.65039 3.10156V4.66016H8.73438V5.90234H7.65039V9.06641C7.65039 9.30078 7.69531 9.46875 7.78516 9.57031C7.875 9.67188 8.04688 9.72266 8.30078 9.72266C8.48828 9.72266 8.6543 9.70898 8.79883 9.68164V10.9648C8.4668 11.0664 8.125 11.1172 7.77344 11.1172C6.58594 11.1172 5.98047 10.5176 5.95703 9.31836V5.90234H5.03125V4.66016H5.95703V3.10156H7.65039Z" fill="white"/></svg>');
+}
+.dark .cont-timeline:hover { 
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><rect style="fill:rgb(57, 75, 89)" width="14" height="14" rx="2"/><path d="M7.65039 3.10156V4.66016H8.73438V5.90234H7.65039V9.06641C7.65039 9.30078 7.69531 9.46875 7.78516 9.57031C7.875 9.67188 8.04688 9.72266 8.30078 9.72266C8.48828 9.72266 8.6543 9.70898 8.79883 9.68164V10.9648C8.4668 11.0664 8.125 11.1172 7.77344 11.1172C6.58594 11.1172 5.98047 10.5176 5.95703 9.31836V5.90234H5.03125V4.66016H5.95703V3.10156H7.65039Z" fill="white"/></svg>');
+}
+
+.dark span {
+	height: 14px;
+	width: 19px;
+}
+
+.dark span:hover { 
+	cursor: pointer;
+}
+
+.dark span.expander.opened::before {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"  width="28" height="12" viewBox="0 0 28 12"><path d="M2.25 3.75L6 8.25L9.75 3.75L2.25 3.75Z" fill="rgb(57, 75, 89)"/><path d="M27.8501 5.55C27.7001 5.4 27.4751 5.25 27.2501 5.25H19.0001C18.7001 5.25 18.4001 5.4 18.3251 5.7L16.0751 10.95C15.9251 11.4 16.0751 12 16.7501 12H25.0001C25.3001 12 25.6001 11.85 25.6751 11.55L27.9251 6.3C28.0751 6.075 28.0001 5.775 27.8501 5.55Z" fill="rgb(191, 204, 214)"/><path d="M16.9 5.1C17.275 4.275 18.1 3.75 19 3.75H25.75V2.25C25.75 1.8 25.45 1.5 25 1.5H20.8L19.525 0.225C19.375 0.075 19.225 0 19 0H16.75C16.3 0 16 0.3 16 0.75V7.275L16.9 5.1Z" fill="rgb(191, 204, 214)"/></svg>');
+}
+.dark span.expander.closed::before {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="12" viewBox="0 0 28 12"><path d="M3.75 9.75L8.25 6L3.75 2.25V9.75Z" fill="rgb(57, 75, 89)"/><path d="M16 6V11.25C16 11.7 16.3 12 16.75 12H27.25C27.7 12 28 11.7 28 11.25V6H16Z" fill="rgb(191, 204, 214)"/><path d="M28 4.5V3C28 2.55 27.7 2.25 27.25 2.25H22.3L20.275 0.225C20.125 0.075 19.975 0 19.75 0H16.75C16.3 0 16 0.3 16 0.75V4.5H28Z" fill="rgb(191, 204, 214)"/></svg>');
+}
+</style>
+</head>
+
+<body class='dark'>
+	<div class=''>
+		<span class='cont-center'></span>
+		<span class='cont-info'></span>
+		<span class='cont-timeline'></span>
+	</div>
+	
+	<div class=''>
+		<span class='expander opened'></span>
+		<span class='expander closed'></span>
+	</div>
+	
+</body>
+</html>

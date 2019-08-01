@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset='utf8'>
+	<meta name='viewport' content='width=device-width'>
+
+	<link rel="shortcut icon" href="./favicon.png">
+	<title>Fires</title>
+
+	<link rel="stylesheet" href="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer.css" />
+	<script src="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer-src.js?1508146119421"></script>
+
+	<link rel='stylesheet' href='resources/style.css'>
+	<link rel='stylesheet' href='resources/fires.css'>
+	<link rel='stylesheet' href='style.css'>
+	<link rel='stylesheet' href='winnie_2.0.css'>
+
+    <script src="ext/pikaday.js"></script>
+	<link rel='stylesheet' href='ext/pikaday.css'>
+	<script src="./fireplugin/spatial_query.js"></script>
+	<script src="./fireplugin/FireVirtualLayer.js"></script>
+	<link rel="stylesheet" href="./fireplugin/FirePlugin.css" />
+</head>
+
+<body>
+<div class="layout-headerPlaceholder"><div class="headerWidget">
+    <div class="headerWidget-left">
+        <div class="headerWidget-logoContainer">
+            <img class="headerWidget-logo" src="resources/logo_ru.png">
+        </div>
+    </div>
+    <div class="headerWidget-right">
+        <div class="headerWidget-bar headerWidget-navigationBar">
+            <div class="headerWidget-barTable headerWidget-navigationBarTable">
+                <div class="headerWidget-barCell headerWidget-leftLinksContainer"><div class="dropdownMenuWidget ui-widget">
+    <div class="dropdownMenuWidget-item icon-menu">
+        <a href="javascript:void(0)" class="dropdownMenuWidget-itemAnchor">
+        </a>
+            <div class="dropdownMenuWidget-itemDropdown" style="display: none;">
+                <ul class="dropdownMenuWidget-dropdownMenu">
+                        <li class="dropdownMenuWidget-dropdownMenuItem">
+                            
+                            <a id="headerLink_about" href="javascript:void(0)" class="dropdownMenuWidget-dropdownItemAnchor">
+                                    <span>О проекте</span>
+                            </a>
+                        </li>
+                        <li class="dropdownMenuWidget-dropdownMenuItem">
+                            <div class="ui-icon ui-icon-newwin dropdownMenuWidget-dropdownMenuIcon"></div>
+                            <a href="docs/" target="_blank" class="dropdownMenuWidget-dropdownItemAnchor dropdownMenuWidget-dropdownItemAnchor_newWindow">
+                                    <span>Справка по сервису</span>
+                            </a>
+                        </li>
+                        <li class="dropdownMenuWidget-dropdownMenuItem">
+                            <div class="ui-icon ui-icon-newwin dropdownMenuWidget-dropdownMenuIcon"></div>
+                            <a href="http://fires.ru/iframePreview.html?width=800&amp;height=600&amp;permalinkUrl=http%253A%2F%2Ffires.ru%2Fembedded.html" target="_blank" class="dropdownMenuWidget-dropdownItemAnchor dropdownMenuWidget-dropdownItemAnchor_newWindow">
+                                    <span>Виджет карты пожаров</span>
+                            </a>
+                        </li>
+                        <li class="dropdownMenuWidget-dropdownMenuItem">
+                            <div class="ui-icon ui-icon-newwin dropdownMenuWidget-dropdownMenuIcon"></div>
+                            <a href="api/" target="_blank" class="dropdownMenuWidget-dropdownItemAnchor dropdownMenuWidget-dropdownItemAnchor_newWindow">
+                                    <span>API для разработчиков</span>
+                            </a>
+                        </li>
+                </ul>
+            </div>
+    </div>
+</div></div>
+                <div class="headerWidget-barCell headerWidget-rightLinksContainer"><div class="dropdownMenuWidget ui-widget">
+    <div class="dropdownMenuWidget-item headerLink-tips">
+        <a id="headerLink_tips" href="javascript:void(0)" class="dropdownMenuWidget-itemAnchor">
+                <span>Как работать с картой?</span>
+                
+        </a>
+    </div>
+</div></div>
+                <div class="headerWidget-barCell headerWidget-languageContainer" style="display: none;"></div>
+                <div class="headerWidget-barCell headerWidget-socialsContainer" style=""><div class="headerWidget-socialIcons">
+</div></div>
+                <div class="headerWidget-barCell headerWidget-authContainer" style=""><div class="authWidget ui-widget">    <div class="authWidget_unauthorized">
+        <div class="authWidget-loginButton">
+            Войти
+        </div>
+    </div>
+</div></div>
+            </div>
+        </div>
+        <div class="headerWidget-bar headerWidget-controlsBar">
+            <div class="headerWidget-barTable headerWidget-controlsBarTable">
+                <div class="headerWidget-barCell headerWidget-menuContainer" style="display: none;"></div>
+                <div class="headerWidget-barCell headerWidget-searchContainer" style=""><table class="SearchInputControl"><tbody><tr><td class="searchBeginTD"><div class="searchBegin"></div></td><td class="searchCenterTD"><input class="searchCenter ui-autocomplete-input" autocomplete="off"><ul id="ui-id-1" tabindex="0" class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front" style="display: none;"></ul></td><td class="searchEndTD"><div class="searchEnd"></div></td></tr></tbody></table></div>
+            </div>
+        </div>
+    </div>
+</div></div>
+<div class="search-options-period">
+	<span class="title">Дата:</span> <input type="text" class="datepicker">
+	<div class="info">За последние 12ч (UTC)</div>
+
+</div>
+
+	<script src='config.js'></script>
+	<script src='winnie_2.0.js'></script>
+
+</body>
+</html>

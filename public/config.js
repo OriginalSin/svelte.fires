@@ -1,0 +1,3 @@
+var locConfig = {
+	permID: 'MRHTJ'
+};

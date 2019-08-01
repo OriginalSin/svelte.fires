@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Preview</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <script type="text/javascript">
+			var search = window.location.search,
+				arr = (search.indexOf('?') === 0 ? search.substr(1) : search).split('&'),
+				queryKey = {};
+
+			arr.forEach(function(pt) {
+				var arr1 = pt.split('=');
+				queryKey[arr1[0]] = decodeURIComponent(arr1[1]);
+
+			});
+			var permalinkUrl = queryKey.permalinkUrl || '%2F%2Fwww.kosmosnimki.ru/demo/winnie_2.0/%3Fconfig%3DM6QMS';
+
+			var iframe = document.createElement('iframe');
+			iframe.width = queryKey.width || 800;
+			iframe.height = queryKey.height || 600;
+			iframe.src = decodeURIComponent(permalinkUrl);
+			document.body.appendChild(iframe);
+        </script>
+    </body>
+</html>

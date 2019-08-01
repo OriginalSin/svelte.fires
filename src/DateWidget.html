@@ -1,0 +1,84 @@
+<div class={labelClass}>{labelValue}</div>
+<input on:change="onChangeHandler(event)" ref:input class={inputClass} type="text" />
+    
+<script>
+    import Pikaday  from 'pikaday';
+    // import Translations from 'scanex-translations';
+    // import {compareDates, getNowDate} from 'js/utils/CommonUtils';
+    const LANGUAGE = 'rus';
+    export default {
+        data () {
+            return {
+                date: new Date(),
+                // date: getNowDate(),
+                mode: 'from'
+            };
+        },
+        computed: {
+            labelClass: ({mode}) => `search-options-period-${mode}`,
+            inputClass: ({mode}) => `search-options-period-${mode}-value`,
+            labelValue: ({mode}) => 'from'
+        },
+        onstate(params) {
+            const {changed = {}, current: {date: currentDate}} = params;
+            if (changed['date']) {
+                this._date && this._date.setDate(currentDate);
+            }
+        },
+        oncreate() {
+            
+            const {date: currentDate} = this.get();
+            let i18n;
+            switch (LANGUAGE){
+                case 'rus':
+                default:
+                    // moment.locale('ru');
+                    i18n = {
+                        previousMonth : 'Предыдущий месяц',
+                        nextMonth     : 'Следующий месяц',
+                        months        : ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+                        weekdays      : ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],
+                        weekdaysShort : ['Вс','Пн','Вт','Ср','Чт','Пт','Сб']
+                    };
+                    break;
+                case 'eng':
+                    // moment.locale('en');
+                    i18n = {
+                        previousMonth : 'Previous Month',
+                        nextMonth     : 'Next Month',
+                        months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+                        weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+                        weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+                    };
+                    break;
+            }
+            this._date = new Pikaday({
+                field: this.refs.input,
+                format: 'DD.MM.YYYY',
+                yearRange: 20,
+                i18n: i18n,
+                keyboardInput: false,
+                blurFieldOnSelect: false,
+            });
+            this._date.setDate(currentDate);
+        },
+        methods: {
+            onChangeHandler(e) {
+                const currentDate = this._date.getDate();
+                const {date: existingDate} = this.get();
+                // if (!compareDates(currentDate, existingDate)) {
+                    // this.fire('setDate', { date:currentDate });
+                // }
+            }
+        }
+    }
+</script>
+
+<style>
+:global(.search-options-period) {
+    position: absolute;
+    z-index: 6;
+    right: 10px;
+    top: 10px;
+}
+</style>
