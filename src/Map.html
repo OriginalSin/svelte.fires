@@ -164,13 +164,14 @@
 					visible: {},
 					expanded: {}
 				},
+				urlParams: null,
 				permalink: null,
 				map: null
 			}
 		},
 		methods: {
 			createMap(it) {
-				let {layersTree} = this.get();
+				let {layersTree, urlParams} = this.get();
 				let app = it.app || {},
 					gmxMap = app.gmxMap || {},
 					state = it.state || {},
@@ -241,11 +242,15 @@
 				var picker = new Pikaday({
 					field: field,
 					onSelect: function(date) {
-						var dStr = date.toLocaleDateString();
+						var dStr = date.toLocaleDateString(),
+							flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true;
+
 						field.value = dStr;
+						
 						var str = 'За 24ч (UTC)';
+						
 						if (currentDateStr === dStr) {
-							str = 'За последние 24+' + currentDate.getUTCHours() + 'ч (UTC)';
+							str = flagDay ? 'За последние 24+' + currentDate.getUTCHours() + 'ч (UTC)' : 'За последние ' + currentDate.getUTCHours() + 'ч (UTC)';
 						}
 						info.innerHTML = str;
 						_this.gmxMap.setDate(date);
@@ -303,12 +308,15 @@
 						var dStr = date.toLocaleDateString(),
 							db = date,
 							day = 1000*60*60*24,
-							de = new Date(db.getTime() + day);
+							de = new Date(db.getTime() + day),
+							flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true;
 
-						if (currentDateStr === dStr) {
+						
+						if (currentDateStr === dStr && flagDay) {
 							de = date;
 							db = new Date(de.getTime() - day);
 						}
+						console.log('дата', urlParams, db, de);
 
 						gmxMap.layers.forEach((it) => {
 							if(it.getGmxProperties) {
@@ -316,7 +324,6 @@
 									id = props.name;
 								if(it.setDateInterval) {
 									it.setDateInterval(db, de);
-console.log('sssssssss', db, de)
 								}
 								if(id in layersTree.visible) {
 									map[layersTree.visible[id] ? 'addLayer' : 'removeLayer'](it);

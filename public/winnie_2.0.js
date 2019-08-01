@@ -2757,6 +2757,7 @@ var app = (function (leaflet) {
 				visible: {},
 				expanded: {}
 			},
+			urlParams: null,
 			permalink: null,
 			map: null
 		}
@@ -2765,6 +2766,7 @@ var app = (function (leaflet) {
 		createMap: function createMap(it) {
 			var ref = this.get();
 			var layersTree = ref.layersTree;
+			var urlParams = ref.urlParams;
 			var app = it.app || {},
 				gmxMap = app.gmxMap || {},
 				state = it.state || {},
@@ -2835,11 +2837,15 @@ var app = (function (leaflet) {
 			var picker = new Pikaday({
 				field: field,
 				onSelect: function(date) {
-					var dStr = date.toLocaleDateString();
+					var dStr = date.toLocaleDateString(),
+						flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true;
+
 					field.value = dStr;
+					
 					var str = 'За 24ч (UTC)';
+					
 					if (currentDateStr === dStr) {
-						str = 'За последние 24+' + currentDate.getUTCHours() + 'ч (UTC)';
+						str = flagDay ? 'За последние 24+' + currentDate.getUTCHours() + 'ч (UTC)' : 'За последние ' + currentDate.getUTCHours() + 'ч (UTC)';
 					}
 					info.innerHTML = str;
 					_this.gmxMap.setDate(date);
@@ -2899,12 +2905,15 @@ var app = (function (leaflet) {
 					var dStr = date.toLocaleDateString(),
 						db = date,
 						day = 1000*60*60*24,
-						de = new Date(db.getTime() + day);
+						de = new Date(db.getTime() + day),
+						flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true;
 
-					if (currentDateStr === dStr) {
+					
+					if (currentDateStr === dStr && flagDay) {
 						de = date;
 						db = new Date(de.getTime() - day);
 					}
+					console.log('дата', urlParams, db, de);
 
 					gmxMap.layers.forEach(function (it) {
 						if(it.getGmxProperties) {
@@ -2912,7 +2921,6 @@ var app = (function (leaflet) {
 								id = props.name;
 							if(it.setDateInterval) {
 								it.setDateInterval(db, de);
-	console.log('sssssssss', db, de);
 							}
 							if(id in layersTree.visible) {
 								map[layersTree.visible[id] ? 'addLayer' : 'removeLayer'](it);
@@ -3868,6 +3876,10 @@ var app = (function (leaflet) {
 			map_initial_data.map = ctx.map ;
 			map_updating.map = true;
 		}
+		if (ctx.urlParams  !== void 0) {
+			map_initial_data.urlParams = ctx.urlParams ;
+			map_updating.urlParams = true;
+		}
 		var map = new Map({
 			root: component.root,
 			store: component.store,
@@ -3877,13 +3889,17 @@ var app = (function (leaflet) {
 				if (!map_updating.map && changed.map) {
 					newState.map = childState.map;
 				}
+
+				if (!map_updating.urlParams && changed.urlParams) {
+					newState.urlParams = childState.urlParams;
+				}
 				component._set(newState);
 				map_updating = {};
 			}
 		});
 
 		component.root._beforecreate.push(function () {
-			map._bind({ map: 1 }, map.get());
+			map._bind({ map: 1, urlParams: 1 }, map.get());
 		});
 
 		var if_block1 = (ctx.share) && create_if_block_1$2(component, ctx);
@@ -3937,6 +3953,10 @@ var app = (function (leaflet) {
 				if (!map_updating.map && changed.map) {
 					map_changes.map = ctx.map ;
 					map_updating.map = ctx.map  !== void 0;
+				}
+				if (!map_updating.urlParams && changed.urlParams) {
+					map_changes.urlParams = ctx.urlParams ;
+					map_updating.urlParams = ctx.urlParams  !== void 0;
 				}
 				map._set(map_changes);
 				map_updating = {};

@@ -1,3 +1,3 @@
 var locConfig = {
-	permID: 'MRHTJ'
+	permID: 'U6A9A'
 };

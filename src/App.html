@@ -16,7 +16,7 @@
 </div>
 {/if}
 <div class="editor-viewerContainer editor_sidebarExpanded">
-	<Map permalink={permalink} bind:map />
+	<Map permalink={permalink} bind:map bind:urlParams />
 </div>
 {#if share}
 <Share conf={conf} />
