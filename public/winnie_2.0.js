@@ -263,7 +263,7 @@ var app = (function (leaflet) {
 			c: function c() {
 				span = createElement("span");
 				if_block.c();
-				span.className = "legendIconCell style svelte-14al98j";
+				span.className = "legendIconCell style svelte-1vhs5pf";
 			},
 
 			m: function m(target, anchor) {
@@ -308,7 +308,7 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				span = createElement("span");
-				span.className = span_class_value = "" + ctx.type + " legendIconStyle " + " svelte-14al98j";
+				span.className = span_class_value = "" + ctx.type + " legendIconStyle " + " svelte-1vhs5pf";
 				setStyle(span, "background-color", ctx.backgroundColor);
 				setStyle(span, "border-color", ctx.borderColor);
 			},
@@ -318,7 +318,7 @@ var app = (function (leaflet) {
 			},
 
 			p: function p(changed, ctx) {
-				if ((changed.type) && span_class_value !== (span_class_value = "" + ctx.type + " legendIconStyle " + " svelte-14al98j")) {
+				if ((changed.type) && span_class_value !== (span_class_value = "" + ctx.type + " legendIconStyle " + " svelte-1vhs5pf")) {
 					span.className = span_class_value;
 				}
 
@@ -348,7 +348,7 @@ var app = (function (leaflet) {
 				img = createElement("img");
 				img.src = ctx.fillPattern;
 				img.alt = "Style Icon";
-				img.className = "fillPattern svelte-14al98j";
+				img.className = "fillPattern svelte-1vhs5pf";
 			},
 
 			m: function m(target, anchor) {
@@ -379,7 +379,7 @@ var app = (function (leaflet) {
 				img.src = img_src_value = ctx.item.RenderStyle.iconUrl;
 				setAttribute(img, "crossorigin", "");
 				img.alt = "Style Icon";
-				img.className = "svelte-14al98j";
+				img.className = "svelte-1vhs5pf";
 			},
 
 			m: function m(target, anchor) {
@@ -610,10 +610,10 @@ var app = (function (leaflet) {
 				li = createElement("li");
 				div = createElement("div");
 				if (if_block0) { if_block0.c(); }
-				text = createText("\r\n\r\n");
+				text = createText("\n\n");
 				if (if_block1) { if_block1.c(); }
 				div.className = "mega";
-				li.className = li_class_value = "line cmd:toggleIcons id:" + ctx.nodeID + " " + ctx.line.type + " svelte-12dy0wf";
+				li.className = li_class_value = "line cmd:toggleIcons id:" + ctx.nodeID + " " + ctx.line.type + " svelte-t2dx67";
 			},
 
 			m: function m(target, anchor) {
@@ -659,7 +659,7 @@ var app = (function (leaflet) {
 					});
 				}
 
-				if ((!current || changed.nodeID || changed.line) && li_class_value !== (li_class_value = "line cmd:toggleIcons id:" + ctx.nodeID + " " + ctx.line.type + " svelte-12dy0wf")) {
+				if ((!current || changed.nodeID || changed.line) && li_class_value !== (li_class_value = "line cmd:toggleIcons id:" + ctx.nodeID + " " + ctx.line.type + " svelte-t2dx67")) {
 					li.className = li_class_value;
 				}
 			},
@@ -707,7 +707,7 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				if (if_block0) { if_block0.c(); }
-				text = createText("\r\n ");
+				text = createText("\n ");
 				if (if_block1) { if_block1.c(); }
 				if_block1_anchor = createComment();
 			},
@@ -791,7 +791,7 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				if (if_block0) { if_block0.c(); }
-				text = createText("\r\n\t\t");
+				text = createText("\n\t\t");
 				if (if_block1) { if_block1.c(); }
 				if_block1_anchor = createComment();
 			},
@@ -856,13 +856,13 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				input = createElement("input");
-				text = createText("\r\n\t");
+				text = createText("\n\t");
 				span = createElement("span");
-				input.className = "expander expanderInput hidden svelte-12dy0wf";
+				input.className = "expander expanderInput hidden svelte-t2dx67";
 				setAttribute(input, "type", "checkbox");
 				input.checked = ctx.isOpened;
 				addListener(span, "click", click_handler);
-				span.className = "expander pointer expanderCont cmd:clickOnExpander svelte-12dy0wf";
+				span.className = "expander pointer expanderCont cmd:clickOnExpander svelte-t2dx67";
 			},
 
 			m: function m(target, anchor) {
@@ -907,16 +907,16 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				if (if_block0) { if_block0.c(); }
-				text0 = createText("\r\n\t");
+				text0 = createText("\n\t");
 				span1 = createElement("span");
 				if (if_block1) { if_block1.c(); }
-				text1 = createText("\r\n\t\t\r\n\t\t");
+				text1 = createText("\n\t\t\n\t\t");
 				if (if_block2) { if_block2.c(); }
-				text2 = createText("\r\n \t\t");
+				text2 = createText("\n \t\t");
 				span0 = createElement("span");
-				span0.className = "pointer cmd:fitBounds cont-center svelte-12dy0wf";
+				span0.className = "pointer cmd:fitBounds cont-center svelte-t2dx67";
 				span0.title = "Позиционировать";
-				span1.className = "icons  svelte-12dy0wf";
+				span1.className = "icons  svelte-t2dx67";
 			},
 
 			m: function m(target, anchor) {
@@ -985,8 +985,8 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				span = createElement("span");
-				span.innerHTML = "<svg role=\"img\" class=\"svgIcon svelte-12dy0wf\"><use xlink:href=\"#overlays\" href=\"#overlays\"></use></svg>";
-				span.className = "cont-overlays svelte-12dy0wf";
+				span.innerHTML = "<svg role=\"img\" class=\"svgIcon svelte-t2dx67\"><use xlink:href=\"#overlays\" href=\"#overlays\"></use></svg>";
+				span.className = "cont-overlays svelte-t2dx67";
 			},
 
 			m: function m(target, anchor) {
@@ -1013,7 +1013,7 @@ var app = (function (leaflet) {
 			c: function c() {
 				span = createElement("span");
 				addListener(span, "click", click_handler);
-				span.className = "pointer cmd:toggleTimeline cont-timeline disabled svelte-12dy0wf";
+				span.className = "pointer cmd:toggleTimeline cont-timeline disabled svelte-t2dx67";
 				span.title = "Добавить на таймлайн";
 			},
 
@@ -1038,7 +1038,7 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				span = createElement("span");
-				span.className = "pointer cmd:showInfo cont-info svelte-12dy0wf";
+				span.className = "pointer cmd:showInfo cont-info svelte-t2dx67";
 				span.title = "Метаданные слоя";
 			},
 
@@ -1078,18 +1078,18 @@ var app = (function (leaflet) {
 			c: function c() {
 				span = createElement("span");
 				if_block0.c();
-				text0 = createText("\r\n\t\t");
+				text0 = createText("\n\t\t");
 				if (if_block1) { if_block1.c(); }
-				text1 = createText("\r\n\t\t");
+				text1 = createText("\n\t\t");
 				label = createElement("label");
 				text2 = createText(text2_value);
-				text3 = createText("\r\n\t\t");
+				text3 = createText("\n\t\t");
 				div = createElement("div");
-				text4 = createText("\r\n\t\t");
+				text4 = createText("\n\t\t");
 				if (if_block2) { if_block2.c(); }
 				addListener(label, "click", click_handler);
-				label.className = label_class_value = "pointer title \r\n\t\t\t" + (!ctx.isGroup ? ' cmd:toggleVisibility' : (ctx.isShowCheckbox ? ' cmd:toggleGroup' : '')) + "\r\n\t\t\t" + ctx.multiStyles + "\r\n\t\t\t" + " svelte-12dy0wf";
-				div.className = div_class_value = "description " + (ctx.properties.description ? '' : 'collapse') + " svelte-12dy0wf";
+				label.className = label_class_value = "pointer title \n\t\t\t" + (!ctx.isGroup ? ' cmd:toggleVisibility' : (ctx.isShowCheckbox ? ' cmd:toggleGroup' : '')) + "\n\t\t\t" + ctx.multiStyles + "\n\t\t\t" + " svelte-t2dx67";
+				div.className = div_class_value = "description " + (ctx.properties.description ? '' : 'collapse') + " svelte-t2dx67";
 				span.className = "cont";
 			},
 
@@ -1139,7 +1139,7 @@ var app = (function (leaflet) {
 					setData(text2, text2_value);
 				}
 
-				if ((!current || changed.isGroup || changed.isShowCheckbox || changed.multiStyles) && label_class_value !== (label_class_value = "pointer title \r\n\t\t\t" + (!ctx.isGroup ? ' cmd:toggleVisibility' : (ctx.isShowCheckbox ? ' cmd:toggleGroup' : '')) + "\r\n\t\t\t" + ctx.multiStyles + "\r\n\t\t\t" + " svelte-12dy0wf")) {
+				if ((!current || changed.isGroup || changed.isShowCheckbox || changed.multiStyles) && label_class_value !== (label_class_value = "pointer title \n\t\t\t" + (!ctx.isGroup ? ' cmd:toggleVisibility' : (ctx.isShowCheckbox ? ' cmd:toggleGroup' : '')) + "\n\t\t\t" + ctx.multiStyles + "\n\t\t\t" + " svelte-t2dx67")) {
 					label.className = label_class_value;
 				}
 
@@ -1147,7 +1147,7 @@ var app = (function (leaflet) {
 					div.innerHTML = raw_value;
 				}
 
-				if ((!current || changed.properties) && div_class_value !== (div_class_value = "description " + (ctx.properties.description ? '' : 'collapse') + " svelte-12dy0wf")) {
+				if ((!current || changed.properties) && div_class_value !== (div_class_value = "description " + (ctx.properties.description ? '' : 'collapse') + " svelte-t2dx67")) {
 					div.className = div_class_value;
 				}
 
@@ -1208,7 +1208,7 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				input = createElement("input");
-				input.className = input_class_value = "check visibility pointer cmd:toggleVisibility " + ctx.line.type + " id:" + ctx.nodeID + " svelte-12dy0wf";
+				input.className = input_class_value = "check visibility pointer cmd:toggleVisibility " + ctx.line.type + " id:" + ctx.nodeID + " svelte-t2dx67";
 				input.name = ctx.checkboxName;
 				setAttribute(input, "type", ctx.checkboxType);
 				input.checked = ctx.isVisible;
@@ -1219,7 +1219,7 @@ var app = (function (leaflet) {
 			},
 
 			p: function p(changed, ctx) {
-				if ((changed.line || changed.nodeID) && input_class_value !== (input_class_value = "check visibility pointer cmd:toggleVisibility " + ctx.line.type + " id:" + ctx.nodeID + " svelte-12dy0wf")) {
+				if ((changed.line || changed.nodeID) && input_class_value !== (input_class_value = "check visibility pointer cmd:toggleVisibility " + ctx.line.type + " id:" + ctx.nodeID + " svelte-t2dx67")) {
 					input.className = input_class_value;
 				}
 
@@ -1292,7 +1292,7 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				input = createElement("input");
-				input.className = input_class_value = "check visibility pointer cmd:toggleGroup " + ctx.line.type + " id:" + ctx.nodeID + " svelte-12dy0wf";
+				input.className = input_class_value = "check visibility pointer cmd:toggleGroup " + ctx.line.type + " id:" + ctx.nodeID + " svelte-t2dx67";
 				input.name = ctx.checkboxName;
 				setAttribute(input, "type", ctx.checkboxType);
 				input.checked = ctx.isGroupVisible;
@@ -1303,7 +1303,7 @@ var app = (function (leaflet) {
 			},
 
 			p: function p(changed, ctx) {
-				if ((changed.line || changed.nodeID) && input_class_value !== (input_class_value = "check visibility pointer cmd:toggleGroup " + ctx.line.type + " id:" + ctx.nodeID + " svelte-12dy0wf")) {
+				if ((changed.line || changed.nodeID) && input_class_value !== (input_class_value = "check visibility pointer cmd:toggleGroup " + ctx.line.type + " id:" + ctx.nodeID + " svelte-t2dx67")) {
 					input.className = input_class_value;
 				}
 
@@ -1467,8 +1467,8 @@ var app = (function (leaflet) {
 				for (var i = 0; i < each_blocks.length; i += 1) {
 					each_blocks[i].c();
 				}
-				div0.className = "legend-cont svelte-12dy0wf";
-				div1.className = "legend svelte-12dy0wf";
+				div0.className = "legend-cont svelte-t2dx67";
+				div1.className = "legend svelte-t2dx67";
 			},
 
 			m: function m(target, anchor) {
@@ -1542,14 +1542,14 @@ var app = (function (leaflet) {
 			c: function c() {
 				div = createElement("div");
 				span0 = createElement("span");
-				text0 = createText("\r\n\t\t\t\t\t\t");
+				text0 = createText("\n\t\t\t\t\t\t");
 				legendiconcell._fragment.c();
-				text1 = createText("\r\n\t\t\t\t\t\t");
+				text1 = createText("\n\t\t\t\t\t\t");
 				span1 = createElement("span");
 				text2 = createText(text2_value);
-				span0.className = "legendIconEye enabled pointer cmd:toggleStyle svelte-12dy0wf";
-				span1.className = "styleName svelte-12dy0wf";
-				div.className = "gmx-style-legend svelte-12dy0wf";
+				span0.className = "legendIconEye enabled pointer cmd:toggleStyle svelte-t2dx67";
+				span1.className = "styleName svelte-t2dx67";
+				div.className = "gmx-style-legend svelte-t2dx67";
 			},
 
 			m: function m(target, anchor) {
@@ -1628,7 +1628,7 @@ var app = (function (leaflet) {
 				for (var i = 0; i < each_blocks.length; i += 1) {
 					each_blocks[i].c();
 				}
-				ul.className = ul_class_value = "group css-treeview id_" + ctx.nodeID + " " + (ctx.isOpened || ctx.isRoot ? '' : 'collapse') + " " + ctx.isRadio + " svelte-12dy0wf";
+				ul.className = ul_class_value = "group css-treeview id_" + ctx.nodeID + " " + (ctx.isOpened || ctx.isRoot ? '' : 'collapse') + " " + ctx.isRadio + " svelte-t2dx67";
 			},
 
 			m: function m(target, anchor) {
@@ -1660,7 +1660,7 @@ var app = (function (leaflet) {
 					for (; i < each_blocks.length; i += 1) { outroBlock(i, 1); }
 				}
 
-				if ((!current || changed.nodeID || changed.isOpened || changed.isRoot || changed.isRadio) && ul_class_value !== (ul_class_value = "group css-treeview id_" + ctx.nodeID + " " + (ctx.isOpened || ctx.isRoot ? '' : 'collapse') + " " + ctx.isRadio + " svelte-12dy0wf")) {
+				if ((!current || changed.nodeID || changed.isOpened || changed.isRoot || changed.isRadio) && ul_class_value !== (ul_class_value = "group css-treeview id_" + ctx.nodeID + " " + (ctx.isOpened || ctx.isRoot ? '' : 'collapse') + " " + ctx.isRadio + " svelte-t2dx67")) {
 					ul.className = ul_class_value;
 				}
 			},
@@ -2042,7 +2042,7 @@ var app = (function (leaflet) {
 				div = createElement("div");
 				linenode._fragment.c();
 				addListener(div, "click", click_handler);
-				div.className = "TreeView svelte-a5qsuv";
+				div.className = "TreeView svelte-147f2mc";
 			},
 
 			m: function m(target, anchor) {
@@ -2838,13 +2838,14 @@ var app = (function (leaflet) {
 				field: field,
 				onSelect: function(date) {
 					var dStr = date.toLocaleDateString(),
+						dayPast24 = currentDateStr === dStr || date.getTime() > currentDate.getTime(),
 						flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true;
 
 					field.value = dStr;
 					
 					var str = 'За 24ч (UTC)';
 					
-					if (currentDateStr === dStr) {
+					if (dayPast24) {
 						str = flagDay ? 'За последние 24+' + currentDate.getUTCHours() + 'ч (UTC)' : 'За последние ' + currentDate.getUTCHours() + 'ч (UTC)';
 					}
 					info.innerHTML = str;
@@ -2906,10 +2907,12 @@ var app = (function (leaflet) {
 						db = date,
 						day = 1000*60*60*24,
 						de = new Date(db.getTime() + day),
-						flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true;
+						flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true,
+						dayPast24 = currentDateStr === dStr || date.getTime() > currentDate.getTime(),
+						gmxTimeline = map.gmxControlsManager.get('gmxTimeline');
 
 					
-					if (currentDateStr === dStr && flagDay) {
+					if (dayPast24 && flagDay) {
 						de = date;
 						db = new Date(de.getTime() - day);
 					}
@@ -2918,12 +2921,15 @@ var app = (function (leaflet) {
 					gmxMap.layers.forEach(function (it) {
 						if(it.getGmxProperties) {
 							var props = it.getGmxProperties(),
-								id = props.name;
-							if(it.setDateInterval) {
-								it.setDateInterval(db, de);
-							}
-							if(id in layersTree.visible) {
-								map[layersTree.visible[id] ? 'addLayer' : 'removeLayer'](it);
+								id = props.name,
+								timeLineFlag = gmxTimeline && gmxTimeline.getLayerState(id);
+							if (!timeLineFlag) {
+								if (it.setDateInterval) {
+									it.setDateInterval(db, de);
+								}
+								if (id in layersTree.visible) {
+									map[layersTree.visible[id] ? 'addLayer' : 'removeLayer'](it);
+								}
 							}
 						}
 					});
@@ -3368,122 +3374,122 @@ var app = (function (leaflet) {
 			c: function c() {
 				div14 = createElement("div");
 				div0 = createElement("div");
-				text0 = createText("\r\n\t");
+				text0 = createText("\n\t");
 				if (if_block) { if_block.c(); }
-				text1 = createText("\r\n\t");
+				text1 = createText("\n\t");
 				div13 = createElement("div");
 				div12 = createElement("div");
 				div11 = createElement("div");
 				div1 = createElement("div");
 				span0 = createElement("span");
 				span0.textContent = "Ссылка на карту:";
-				text3 = createText("\r\n\t\t\t\t\t");
+				text3 = createText("\n\t\t\t\t\t");
 				a0 = createElement("a");
 				i0 = createElement("i");
-				text4 = createText("\r\n\t\t\t\t\t");
+				text4 = createText("\n\t\t\t\t\t");
 				a1 = createElement("a");
 				i1 = createElement("i");
-				text5 = createText("\r\n\t\t\t\t\t");
+				text5 = createText("\n\t\t\t\t\t");
 				a2 = createElement("a");
 				i2 = createElement("i");
-				text6 = createText("\r\n\t\t\t\t");
+				text6 = createText("\n\t\t\t\t");
 				div3 = createElement("div");
 				div2 = createElement("div");
 				input0 = createElement("input");
-				text7 = createText("\r\n\t\t\t\t\t\t");
+				text7 = createText("\n\t\t\t\t\t\t");
 				a3 = createElement("a");
 				i3 = createElement("i");
-				text8 = createText("\r\n\t\t\t\t");
+				text8 = createText("\n\t\t\t\t");
 				div4 = createElement("div");
 				div4.textContent = "Код для вставки:";
-				text10 = createText("\r\n\t\t\t\t");
+				text10 = createText("\n\t\t\t\t");
 				div6 = createElement("div");
 				div5 = createElement("div");
 				input1 = createElement("input");
-				text11 = createText("\r\n\t\t\t\t\t\t\t");
+				text11 = createText("\n\t\t\t\t\t\t\t");
 				span1 = createElement("span");
 				span1.textContent = "x";
-				text13 = createText("\r\n\t\t\t\t\t\t\t");
+				text13 = createText("\n\t\t\t\t\t\t\t");
 				input2 = createElement("input");
-				text14 = createText("\r\n\t\t\t\t\t\t");
+				text14 = createText("\n\t\t\t\t\t\t");
 				span3 = createElement("span");
-				span3.innerHTML = "<span>предпросмотр</span><i class=\"icon-link-ext svelte-nxbuzg\"></i>";
-				text16 = createText("\r\n\t\t\t\t\t\t");
+				span3.innerHTML = "<span>предпросмотр</span><i class=\"icon-link-ext svelte-1cva6jy\"></i>";
+				text16 = createText("\n\t\t\t\t\t\t");
 				span4 = createElement("span");
 				a4 = createElement("a");
 				text17 = createText("конструктор приложений");
 				i5 = createElement("i");
-				text18 = createText("\r\n\t\t\t\t");
+				text18 = createText("\n\t\t\t\t");
 				div9 = createElement("div");
 				textarea = createElement("textarea");
-				text19 = createText("\r\n\t\t\t\t\t");
+				text19 = createText("\n\t\t\t\t\t");
 				div8 = createElement("div");
 				div8.innerHTML = "<div class=\"alertWidget ui-widget\"></div>";
-				text20 = createText("\r\n\t\t\t\t");
+				text20 = createText("\n\t\t\t\t");
 				div10 = createElement("div");
 				span5 = createElement("span");
 				a5 = createElement("a");
 				text21 = createText("предпросмотр");
 				i6 = createElement("i");
-				div0.className = "arrow svelte-nxbuzg";
-				span0.className = "bold svelte-nxbuzg";
-				i0.className = "icon-twitter svelte-nxbuzg";
-				a0.className = "gmx-link_icon svelte-nxbuzg";
+				div0.className = "arrow svelte-1cva6jy";
+				span0.className = "bold svelte-1cva6jy";
+				i0.className = "icon-twitter svelte-1cva6jy";
+				a0.className = "gmx-link_icon svelte-1cva6jy";
 				a0.target = "_blank";
 				a0.href = a0_href_value = "//www.twitter.com/share?url=" + ctx.link;
-				i1.className = "icon-facebook svelte-nxbuzg";
-				a1.className = "gmx-link_icon svelte-nxbuzg";
+				i1.className = "icon-facebook svelte-1cva6jy";
+				a1.className = "gmx-link_icon svelte-1cva6jy";
 				a1.target = "_blank";
 				a1.href = a1_href_value = "https://www.facebook.com/sharer/sharer.php?u=" + ctx.link;
-				i2.className = "icon-vk svelte-nxbuzg";
-				a2.className = "gmx-link_icon svelte-nxbuzg";
+				i2.className = "icon-vk svelte-1cva6jy";
+				a2.className = "gmx-link_icon svelte-1cva6jy";
 				a2.target = "_blank";
 				a2.href = a2_href_value = "//vkontakte.ru/share.php?url" + ctx.link;
-				div1.className = "shareDialog-row shareDialog-title svelte-nxbuzg";
-				input0.className = "shareDialog-inputPermalinkUrl svelte-nxbuzg";
+				div1.className = "shareDialog-row shareDialog-title svelte-1cva6jy";
+				input0.className = "shareDialog-inputPermalinkUrl svelte-1cva6jy";
 				setAttribute(input0, "type", "text");
 				input0.readOnly = "readonly";
 				input0.value = ctx.link;
-				i3.className = "icon-link-ext svelte-nxbuzg";
+				i3.className = "icon-link-ext svelte-1cva6jy";
 				i3.title = "открыть в новом окне";
-				a3.className = "gmx-link_icon svelte-nxbuzg";
+				a3.className = "gmx-link_icon svelte-1cva6jy";
 				a3.target = "_blank";
 				a3.href = ctx.link;
 				div2.className = "gmx-table";
-				div3.className = "shareDialog-row svelte-nxbuzg";
-				div4.className = "shareDialog-row bold svelte-nxbuzg";
+				div3.className = "shareDialog-row svelte-1cva6jy";
+				div4.className = "shareDialog-row bold svelte-1cva6jy";
 				addListener(input1, "change", change_handler);
-				input1.className = " svelte-nxbuzg";
+				input1.className = " svelte-1cva6jy";
 				setAttribute(input1, "type", "number");
 				input1.value = ctx.frameWidth;
 				span1.className = "shareDialog-resolutionCross";
 				addListener(input2, "change", change_handler_1);
-				input2.className = " svelte-nxbuzg";
+				input2.className = " svelte-1cva6jy";
 				setAttribute(input2, "type", "number");
 				input2.value = ctx.frameHeight;
-				span3.className = "shareDialog-validationError hidden svelte-nxbuzg";
-				a4.className = "shareDialog-previewLink gmx-link svelte-nxbuzg";
+				span3.className = "shareDialog-validationError hidden svelte-1cva6jy";
+				a4.className = "shareDialog-previewLink gmx-link svelte-1cva6jy";
 				a4.href = a4_href_value = "" + ctx.link + "&edit=1";
 				a4.target = "_blank";
-				i5.className = "gmx-icon icon-link-ext svelte-nxbuzg";
-				span4.className = "shareDialog-previewLinkCell constrLink shareDialog-validationOk svelte-nxbuzg";
-				div5.className = "gmx-table shareDialog-resolutionTable svelte-nxbuzg";
-				div6.className = "shareDialog-row svelte-nxbuzg";
-				textarea.className = "shareDialog-validationOk svelte-nxbuzg";
+				i5.className = "gmx-icon icon-link-ext svelte-1cva6jy";
+				span4.className = "shareDialog-previewLinkCell constrLink shareDialog-validationOk svelte-1cva6jy";
+				div5.className = "gmx-table shareDialog-resolutionTable svelte-1cva6jy";
+				div6.className = "shareDialog-row svelte-1cva6jy";
+				textarea.className = "shareDialog-validationOk svelte-1cva6jy";
 				textarea.readOnly = "readonly";
 				textarea.value = textarea_value_value = "<iframe src=\"" + ctx.link + "\" width=\"" + ctx.frameWidth + "\" height=\"" + ctx.frameHeight + "\"></iframe>";
-				div8.className = "shareDialog-validationErrorView hidden svelte-nxbuzg";
-				div9.className = "shareDialog-row svelte-nxbuzg";
-				a5.className = "shareDialog-previewLink gmx-link svelte-nxbuzg";
+				div8.className = "shareDialog-validationErrorView hidden svelte-1cva6jy";
+				div9.className = "shareDialog-row svelte-1cva6jy";
+				a5.className = "shareDialog-previewLink gmx-link svelte-1cva6jy";
 				a5.href = a5_href_value = "//winnie.kosmosnimki.ru/2.0/iframePreview.html?width=" + ctx.frameWidth + "&height=" + ctx.frameHeight + "&url=" + ctx.link;
 				a5.target = "_blank";
-				i6.className = "gmx-icon icon-link-ext svelte-nxbuzg";
-				span5.className = "shareDialog-previewLinkCell shareDialog-validationOk svelte-nxbuzg";
-				div10.className = "shareDialog-row svelte-nxbuzg";
+				i6.className = "gmx-icon icon-link-ext svelte-1cva6jy";
+				span5.className = "shareDialog-previewLinkCell shareDialog-validationOk svelte-1cva6jy";
+				div10.className = "shareDialog-row svelte-1cva6jy";
 				div11.className = "shareDialog";
 				div12.className = "shareDialogContainer";
-				div13.className = "popover-content svelte-nxbuzg";
-				div14.className = "share svelte-nxbuzg";
+				div13.className = "popover-content svelte-1cva6jy";
+				div14.className = "share svelte-1cva6jy";
 			},
 
 			m: function m(target, anchor) {
@@ -3909,15 +3915,15 @@ var app = (function (leaflet) {
 		return {
 			c: function c() {
 				if (if_block0) { if_block0.c(); }
-				text0 = createText("\r\n");
+				text0 = createText("\n");
 				div = createElement("div");
 				map._fragment.c();
-				text1 = createText("\r\n");
+				text1 = createText("\n");
 				if (if_block1) { if_block1.c(); }
-				text2 = createText("\r\n\r\n");
+				text2 = createText("\n\n");
 				if (if_block2) { if_block2.c(); }
 				if_block2_anchor = createComment();
-				div.className = "editor-viewerContainer editor_sidebarExpanded svelte-oqxl1y";
+				div.className = "editor-viewerContainer editor_sidebarExpanded svelte-gw2s3e";
 			},
 
 			m: function m(target, anchor) {
@@ -4056,14 +4062,14 @@ var app = (function (leaflet) {
 					each_blocks[i].c();
 				}
 
-				text = createText("\r\n\t\t\t");
+				text = createText("\n\t\t\t");
 				div2 = createElement("div");
-				div0.className = "dropdownMenuWidget svelte-oqxl1y";
-				div1.className = "sidebarPanel-toolbarContainer svelte-oqxl1y";
+				div0.className = "dropdownMenuWidget svelte-gw2s3e";
+				div1.className = "sidebarPanel-toolbarContainer svelte-gw2s3e";
 				div2.id = "editor";
-				div2.className = "editor svelte-oqxl1y";
-				div3.className = "sidebarPanel svelte-oqxl1y";
-				div4.className = "editor-sidebarContainer editor_sidebarExpanded svelte-oqxl1y";
+				div2.className = "editor svelte-gw2s3e";
+				div3.className = "sidebarPanel svelte-gw2s3e";
+				div4.className = "editor-sidebarContainer editor_sidebarExpanded svelte-gw2s3e";
 			},
 
 			m: function m(target, anchor) {
@@ -4121,15 +4127,15 @@ var app = (function (leaflet) {
 			c: function c() {
 				div = createElement("div");
 				i = createElement("i");
-				text0 = createText("\r\n\t\t\t\t\t");
+				text0 = createText("\n\t\t\t\t\t");
 				span = createElement("span");
 				text1 = createText(text1_value);
-				i.className = i_class_value = "icon-" + ctx.it.name + " svelte-oqxl1y";
+				i.className = i_class_value = "icon-" + ctx.it.name + " svelte-gw2s3e";
 
 				div._svelte = { component: component, ctx: ctx };
 
 				addListener(div, "click", click_handler);
-				div.className = div_class_value = "dropdownMenuWidget-item" + (ctx.it.checked ? ' checked' : '') + " svelte-oqxl1y";
+				div.className = div_class_value = "dropdownMenuWidget-item" + (ctx.it.checked ? ' checked' : '') + " svelte-gw2s3e";
 			},
 
 			m: function m(target, anchor) {
@@ -4142,7 +4148,7 @@ var app = (function (leaflet) {
 
 			p: function p(changed, _ctx) {
 				ctx = _ctx;
-				if ((changed.dropdownMenu) && i_class_value !== (i_class_value = "icon-" + ctx.it.name + " svelte-oqxl1y")) {
+				if ((changed.dropdownMenu) && i_class_value !== (i_class_value = "icon-" + ctx.it.name + " svelte-gw2s3e")) {
 					i.className = i_class_value;
 				}
 
@@ -4151,7 +4157,7 @@ var app = (function (leaflet) {
 				}
 
 				div._svelte.ctx = ctx;
-				if ((changed.dropdownMenu) && div_class_value !== (div_class_value = "dropdownMenuWidget-item" + (ctx.it.checked ? ' checked' : '') + " svelte-oqxl1y")) {
+				if ((changed.dropdownMenu) && div_class_value !== (div_class_value = "dropdownMenuWidget-item" + (ctx.it.checked ? ' checked' : '') + " svelte-gw2s3e")) {
 					div.className = div_class_value;
 				}
 			},

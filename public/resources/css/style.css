@@ -1,160 +1,197 @@
-.layout-headerPlaceholder {
-    position: absolute;
-    width: 100%;
-    height: 70px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
+
+body {
+	margin: 0;
 }
 
-.headerWidget {
-    display: table;
-    height: 70px;
-    font-family: Arial;
+.header {
+	position: absolute;
+	width: 100%;
+	height: 60px;
+	background: #FCFCFE;
+	border-bottom: 1px solid #E3E8F1;
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	justify-content: space-between;
+	align-items: center;
+	min-width: 895px;
 }
 
-.headerWidget-left {
-    display: table-cell;
+a.logo {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.23s ease;
+	cursor: pointer;
+	margin-left: 15px;
+	text-decoration: none;
 }
 
-.headerWidget-logoContainer {
-    padding: 5px 10px;
+.logo:hover {
+	opacity: 0.7;
 }
 
-.headerWidget-logo {
-    vertical-align: top;
-    height: 60px;
+.logo_left {
+	background: url(../img/vectur.png);
+	width: 26px;
+	height: 35px;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-right: 13px;
 }
 
-.headerWidget-right {
-    display: table-cell;
-    vertical-align: top;
-    width: 100%;
+@media (min-width: 1060px) {
+	.logo_right {
+		font-family: 'Montserrat';
+		font-style: normal;
+		font-weight: bold;
+		font-size: 18px;
+		line-height: 22px;
+		color: #4C5567;
+	}
 }
 
-.headerWidget-navigationBar {
-    margin-bottom: 5px;
-    background: #efefef;
+@media (max-width: 1060px) {
+	.logo_right {
+		display: none;
+	}
 }
 
-.headerWidget-bar {
-    padding-right: 5px;
+.block_right {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: auto;
 }
 
-.headerWidget-navigationBarTable {
-    height: 30px;
+a.block_right_1 {
+	padding: 0 32px;
+	color: #ED592B;
+	font-family: Montserrat;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 18px;
+	cursor: pointer;
+	text-decoration: none;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-left: 1px solid #E3E8F1;
+	transition: all 0.23s ease;
 }
 
-.headerWidget-barTable {
-    display: table;
-    width: 100%;
+a.block_right_1:hover {
+	opacity: 0.7;
 }
 
-.headerWidget-navigationBarTable .headerWidget-barCell {
-    padding-left: 10px;
+a.block_right_2 {
+	padding: 0 32px;
+	color: #488BF0;
+	font-family: Montserrat;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 18px;
+	cursor: pointer;
+	text-decoration: none;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-left: 1px solid #E3E8F1;
+	transition: all 0.23s ease;
 }
 
-.headerWidget-leftLinksContainer {
-    width: 100%;
+a.block_right_2:hover {
+	opacity: 0.7;
 }
 
-.headerWidget-barCell {
-    display: table-cell;
-    vertical-align: middle;
-    padding-right: 5px;
+a.block_right_3 {
+	padding: 0 32px;
+	color: #21D152;
+	font-family: Montserrat;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 18px;
+	cursor: pointer;
+	text-decoration: none;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-left: 1px solid #E3E8F1;
+	transition: all 0.23s ease;
 }
 
-.headerWidget .dropdownMenuWidget {
-    display: table;
+a.block_right_3:hover {
+	opacity: 0.7;
 }
 
-.dropdownMenuWidget-item {
-    display: table-cell;
-    vertical-align: middle;
-    font-size: 12px;
-    cursor: pointer;
-    padding: 0px 10px;
-    white-space: nowrap;
+a.block_right_4 {
+	padding: 0 32px;
+	color: #DCB93D;
+	font-family: Montserrat;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 18px;
+	cursor: pointer;
+	text-decoration: none;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-left: 1px solid #E3E8F1;
+	transition: all 0.23s ease;
 }
 
-[class^="icon-"]:before, [class*=" icon-"]:before {
-    font-family: "fontello";
-    font-style: normal;
-    font-weight: normal;
-    speak: none;
-    display: inline-block;
-    text-decoration: inherit;
-    width: 1em;
-    margin-right: .2em;
-    text-align: center;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1em;
-    margin-left: .2em;
+a.block_right_4:hover {
+	opacity: 0.7;
 }
 
-.icon-menu::before {
-    content: "iii";
+a.block_right_5 {
+	padding: 0 32px;
+	cursor: pointer;
+	text-decoration: none;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-left: 1px solid #E3E8F1;
+	transition: all 0.23s ease;
+	background: url(../img/group1.png);
+	width: auto;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
-.dropdownMenuWidget-item a {
-    color: #303030;
-    text-decoration: none;
+a.block_right_5:hover {
+	opacity: 0.7;
 }
 
-.dropdownMenuWidget-itemDropdown {
-    position: absolute;
-    z-index: 1000;
-    min-width: 120px;
+a.block_right_6 {
+	padding: 0 32px;
+	cursor: pointer;
+	text-decoration: none;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-left: 1px solid #E3E8F1;
+	transition: all 0.23s ease;
+	background: url(../img/group2.png);
+	width: auto;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
-.headerWidget .dropdownMenuWidget-dropdownMenu {
-    margin-top: 7px;
+a.block_right_6:hover {
+	opacity: 0.7;
 }
-
-.dropdownMenuWidget-dropdownMenu {
-    background: white;
-    border: 1px solid #efefef;
-    border-bottom: none;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-}
-
-ul, menu, dir {
-    display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
-}
-
-.dropdownMenuWidget-dropdownMenuItem {
-    display: block;
-    border-bottom: 1px solid #efefef;
-    padding: 5px 10px;
-}
-
-li {
-    text-align: -webkit-match-parent;
-}
-
-.dropdownMenuWidget-dropdownMenuItem a {
-    width: 100%;
-    display: block;
-}
-
-
-.dropdownMenuWidget-item a {
-    color: #303030;
-    text-decoration: none;
-}
-
-
-
-
-
-
-
-
-
