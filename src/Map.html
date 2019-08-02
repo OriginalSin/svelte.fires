@@ -243,13 +243,14 @@
 					field: field,
 					onSelect: function(date) {
 						var dStr = date.toLocaleDateString(),
+							dayPast24 = currentDateStr === dStr || date.getTime() > currentDate.getTime(),
 							flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true;
 
 						field.value = dStr;
 						
 						var str = 'За 24ч (UTC)';
 						
-						if (currentDateStr === dStr) {
+						if (dayPast24) {
 							str = flagDay ? 'За последние 24+' + currentDate.getUTCHours() + 'ч (UTC)' : 'За последние ' + currentDate.getUTCHours() + 'ч (UTC)';
 						}
 						info.innerHTML = str;
@@ -309,10 +310,12 @@
 							db = date,
 							day = 1000*60*60*24,
 							de = new Date(db.getTime() + day),
-							flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true;
+							flagDay = urlParams.flagDay === '1' ? (new Date()).getUTCHours() < 12 : true,
+							dayPast24 = currentDateStr === dStr || date.getTime() > currentDate.getTime(),
+							gmxTimeline = map.gmxControlsManager.get('gmxTimeline');
 
 						
-						if (currentDateStr === dStr && flagDay) {
+						if (dayPast24 && flagDay) {
 							de = date;
 							db = new Date(de.getTime() - day);
 						}
@@ -321,12 +324,15 @@
 						gmxMap.layers.forEach((it) => {
 							if(it.getGmxProperties) {
 								let props = it.getGmxProperties(),
-									id = props.name;
-								if(it.setDateInterval) {
-									it.setDateInterval(db, de);
-								}
-								if(id in layersTree.visible) {
-									map[layersTree.visible[id] ? 'addLayer' : 'removeLayer'](it);
+									id = props.name,
+									timeLineFlag = gmxTimeline && gmxTimeline.getLayerState(id);
+								if (!timeLineFlag) {
+									if (it.setDateInterval) {
+										it.setDateInterval(db, de);
+									}
+									if (id in layersTree.visible) {
+										map[layersTree.visible[id] ? 'addLayer' : 'removeLayer'](it);
+									}
 								}
 							}
 						});
