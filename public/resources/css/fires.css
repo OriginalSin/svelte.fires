@@ -4636,7 +4636,7 @@ input.submit {
 }
 
 .layout-mapPlaceholder {
-  background: url('FiresStyles/build/assets/images/tiny_grid.png?9dda0c');
+  background: url('tiny_grid.png?9dda0c');
 }
 
 .layout-headerHidden .layout-mapPlaceholder {
