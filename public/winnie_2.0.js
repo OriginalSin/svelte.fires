@@ -2773,7 +2773,7 @@ var app = (function (leaflet) {
 				// layersTree = state.layersTree || {},
 				calendar = state.calendar || {},
 				mapID = gmxMap.mapID || '946GH',
-				apiKey = gmxMap.apiKey || 'Z2SSNR87N4',
+				apiKey = app.apiKey || gmxMap.apiKey || 'Z2SSNR87N4',
 				stateMap = state.map || {},
 				pos = stateMap.position || {},
 	                    minZoom = stateMap.minZoom || 1,
@@ -3744,6 +3744,7 @@ var app = (function (leaflet) {
 			var urlParams = ref.urlParams;
 			// console.log('?config=7ZSC4  dddddddd', out, urlParams)
 			if (out.app) {
+				out.app.apiKey = chkPar('apiKey', urlParams, out.apiKey, '');		// apiKey
 				out.app.theme = chkPar('theme', urlParams, out.app, 'dark');		// тема по умолчанию
 				out.app.iconSidebar = chkPar('iconSidebar', urlParams, out.app);	// iconSidebar по умолчанию
 				out.app.treeView = chkPar('treeView', urlParams, out.app);			// treeView по умолчанию
@@ -4302,11 +4303,14 @@ var app = (function (leaflet) {
 		return p;
 	})();
 
-	if (locConfig && locConfig.permID) {
+	var locConfig = window.locConfig || {};
+	if (locConfig.permID) {
 		pars.config = locConfig.permID;
 	}
+	if (locConfig.apiKey) {
+		pars.apiKey = locConfig.apiKey;
+	}
 
-	console.log('ddddd', locConfig);
 	var mCont = document.getElementsByClassName('layout-mapPlaceholder')[0];
 
 	var app = new App({

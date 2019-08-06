@@ -9,11 +9,14 @@ let pars = (() => {
 	return p;
 })();
 
-if (locConfig && locConfig.permID) {
+let locConfig = window.locConfig || {};
+if (locConfig.permID) {
 	pars.config = locConfig.permID;
 }
+if (locConfig.apiKey) {
+	pars.apiKey = locConfig.apiKey;
+}
 
-console.log('ddddd', locConfig);
 let mCont = document.getElementsByClassName('layout-mapPlaceholder')[0];
 
 const app = new App({

@@ -1134,33 +1134,6 @@ img.fillPattern {
     outline: none;
     user-select: none
 }
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-.scanex-sidebar {
-    display: flex;
-    vertical-align: top;    
-}
-.scanex-sidebar .tabs,
-.scanex-sidebar .panes {        
-    vertical-align: top;
-    display: inline-block;    
-}    
-.scanex-sidebar .tabs div {
-    text-align: center;
-    cursor: pointer;       
-}
-.scanex-sidebar .shown {
-	display: block;
-}
-.scanex-sidebar .hidden {
-	display: none;
-}
 .leaflet-iconLayers {
     pointer-events: none;
 }
@@ -1223,3 +1196,30 @@ img.fillPattern {
 .leaflet-iconLayers-layerCell_hidden { display: none; }
 .leaflet-iconLayers-layerCell_active .leaflet-iconLayers-layer { cursor: default; }
 .leaflet-iconLayers-layerCell_active .leaflet-iconLayers-layerCheckIcon { display: block; }
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.scanex-sidebar {
+    display: flex;
+    vertical-align: top;    
+}
+.scanex-sidebar .tabs,
+.scanex-sidebar .panes {        
+    vertical-align: top;
+    display: inline-block;    
+}    
+.scanex-sidebar .tabs div {
+    text-align: center;
+    cursor: pointer;       
+}
+.scanex-sidebar .shown {
+	display: block;
+}
+.scanex-sidebar .hidden {
+	display: none;
+}

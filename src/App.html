@@ -100,6 +100,7 @@
 				let {urlParams} = this.get();
 				// console.log('?config=7ZSC4  dddddddd', out, urlParams)
 				if (out.app) {
+					out.app.apiKey = chkPar('apiKey', urlParams, out.apiKey, '');		// apiKey
 					out.app.theme = chkPar('theme', urlParams, out.app, 'dark');		// тема по умолчанию
 					out.app.iconSidebar = chkPar('iconSidebar', urlParams, out.app);	// iconSidebar по умолчанию
 					out.app.treeView = chkPar('treeView', urlParams, out.app);			// treeView по умолчанию
