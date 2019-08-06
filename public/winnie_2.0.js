@@ -2913,8 +2913,8 @@ var app = (function (leaflet) {
 
 					
 					if (dayPast24 && flagDay) {
-						de = date;
-						db = new Date(de.getTime() - day);
+						de = new Date();
+						db = new Date(date.getTime() - day);
 					}
 					console.log('дата', urlParams, db, de);
 
