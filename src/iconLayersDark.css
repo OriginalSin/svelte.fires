@@ -10,7 +10,7 @@
 .dark .scanex-sidebar .tabs {
     background: #FCFCFE;
     height: calc(100vh - 20px);
-    width: 57px;
+    width: 50px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -24,7 +24,7 @@
     height: 100%;
     background: #E3E8F1;
     position: absolute;
-    left: 54px;
+    left: 50px;
     z-index: 1;
     top: 0;
 }

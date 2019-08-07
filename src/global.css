@@ -50,7 +50,7 @@ html, body, #map {
 }
 
 .icon-layers:before {
-    content: url(http://kirilletc.me/logo.jpg);
+    content: url(./resources/img/logo.jpg);
     display: inherit;
     position: relative;
     bottom: 3px;
