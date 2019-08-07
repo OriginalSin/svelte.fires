@@ -8,14 +8,25 @@
 }
 
 .dark .scanex-sidebar .tabs {
-	background: #4c5567;
-	height: calc(100vh - 20px);
-	width: 37px;
-	display: flex;
-	justify-content: flex-start;
+    background: #FCFCFE;
+    height: calc(100vh - 20px);
+    width: 57px;
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     padding-top: 15px;
+}
+
+.dark .scanex-sidebar .tabs:before {
+    content: '';
+    width: 1px;
+    height: 100%;
+    background: #E3E8F1;
+    position: absolute;
+    left: 54px;
+    z-index: 1;
+    top: 0;
 }
 
 .dark .opened {

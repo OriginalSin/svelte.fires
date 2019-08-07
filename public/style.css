@@ -48,13 +48,13 @@ html, body, #map {
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
+
 .icon-layers:before {
-  /*content: '\e82e';*/
-  content: url('ext/img/icon_s.png');
-  display: inherit;
-  position: relative;
-  bottom: 15px;
-  left: -3px;
+    content: url(http://kirilletc.me/logo.jpg);
+    display: inherit;
+    position: relative;
+    bottom: 3px;
+    left: 0px;
 }
 
 .icon-refresh:before {
@@ -165,14 +165,25 @@ html, body, #map {
 }
 
 .dark .scanex-sidebar .tabs {
-	background: #4c5567;
-	height: calc(100vh - 20px);
-	width: 37px;
-	display: flex;
-	justify-content: flex-start;
+    background: #FCFCFE;
+    height: calc(100vh - 20px);
+    width: 57px;
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     padding-top: 15px;
+}
+
+.dark .scanex-sidebar .tabs:before {
+    content: '';
+    width: 1px;
+    height: 100%;
+    background: #E3E8F1;
+    position: absolute;
+    left: 54px;
+    z-index: 1;
+    top: 0;
 }
 
 .dark .opened {
@@ -1134,6 +1145,33 @@ img.fillPattern {
     outline: none;
     user-select: none
 }
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.scanex-sidebar {
+    display: flex;
+    vertical-align: top;    
+}
+.scanex-sidebar .tabs,
+.scanex-sidebar .panes {        
+    vertical-align: top;
+    display: inline-block;    
+}    
+.scanex-sidebar .tabs div {
+    text-align: center;
+    cursor: pointer;       
+}
+.scanex-sidebar .shown {
+	display: block;
+}
+.scanex-sidebar .hidden {
+	display: none;
+}
 .leaflet-iconLayers {
     pointer-events: none;
 }
@@ -1196,30 +1234,3 @@ img.fillPattern {
 .leaflet-iconLayers-layerCell_hidden { display: none; }
 .leaflet-iconLayers-layerCell_active .leaflet-iconLayers-layer { cursor: default; }
 .leaflet-iconLayers-layerCell_active .leaflet-iconLayers-layerCheckIcon { display: block; }
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-.scanex-sidebar {
-    display: flex;
-    vertical-align: top;    
-}
-.scanex-sidebar .tabs,
-.scanex-sidebar .panes {        
-    vertical-align: top;
-    display: inline-block;    
-}    
-.scanex-sidebar .tabs div {
-    text-align: center;
-    cursor: pointer;       
-}
-.scanex-sidebar .shown {
-	display: block;
-}
-.scanex-sidebar .hidden {
-	display: none;
-}

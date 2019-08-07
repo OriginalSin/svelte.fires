@@ -48,13 +48,13 @@ html, body, #map {
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
+
 .icon-layers:before {
-  /*content: '\e82e';*/
-  content: url('ext/img/icon_s.png');
-  display: inherit;
-  position: relative;
-  bottom: 15px;
-  left: -3px;
+    content: url(http://kirilletc.me/logo.jpg);
+    display: inherit;
+    position: relative;
+    bottom: 3px;
+    left: 0px;
 }
 
 .icon-refresh:before {
