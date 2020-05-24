@@ -330,7 +330,9 @@ var FireVirtualLayer = (L.Layer || L.Class).extend({
 						labelHaloColor: 0,
                         label: {
                             size: 12,
-                            color: 0xffffff,
+                        color: 0xffffff,
+                        haloColor: 0x000000,
+                            // color: 0xffffff,
                             field: 'label',
                             align: 'center'
                         }
@@ -439,9 +441,9 @@ var FireVirtualLayer = (L.Layer || L.Class).extend({
 			// this._hotspotLayer.setZIndex(this.options.zIndex);
 			// this._clustersLayer.setZIndex(this.options.zIndex);
 			// this._clustersGeomLayer.setZIndex(this.options.zIndex);
-            map.addLayer(this._hotspotLayer);
             map.addLayer(this._clustersLayer);
             map.addLayer(this._clustersGeomLayer);
+            map.addLayer(this._hotspotLayer);
         }.bind(this));
     },
 
@@ -625,6 +627,9 @@ var FireVirtualLayer = (L.Layer || L.Class).extend({
             dateAttr = fromLayer.getGmxProperties().TemporalColumnName,
             idAttr = fromLayer.getGmxProperties().identityField;
 
+		if (!(clusterAttr in indexes)) {
+			clusterAttr = idAttr;
+		}
         var parseItem = function(item) {
                 var props = item.properties;
                 return {
