@@ -2912,7 +2912,7 @@ var app = (function (leaflet) {
 				//yearRange: 20,
 
 		//        firstDay: 1,
-				//minDate: new Date(),
+				minDate: new Date(currentDate.getTime() - 3*day),
 				//maxDate: new Date(2020, 12, 31),
 				//yearRange: [2000,2020]
 			});
@@ -2959,7 +2959,7 @@ var app = (function (leaflet) {
 						de = new Date();
 						db = new Date(date.getTime() - day);
 					}
-					console.log('дата', urlParams, db, de);
+					// console.log('дата', urlParams, db, de);
 
 					gmxMap.layers.forEach((it) => {
 						if(it.getGmxProperties) {
@@ -2977,6 +2977,18 @@ var app = (function (leaflet) {
 						}
 					});
 				};
+
+				var latlngs = [{"lat":69.869892,"lng":29.443359},{"lat":68.784144,"lng":27.509766},{"lat":60.75916,"lng":27.773438},{"lat":60.261617,"lng":29.267578},{"lat":60.141505,"lng":30.366211},{"lat":59.800634,"lng":30.454102},{"lat":59.678835,"lng":28.894043},{"lat":59.288332,"lng":27.092285},{"lat":56.194481,"lng":26.850586},{"lat":53.826597,"lng":22.763672},{"lat":47.989922,"lng":22.016602},{"lat":41.277806,"lng":27.817383},{"lat":35.960223,"lng":51.635742},{"lat":34.849875,"lng":118.740234},{"lat":35.209722,"lng":128.671875},{"lat":43.325178,"lng":145.151367},{"lat":45.706179,"lng":152.226563},{"lat":54.521081,"lng":163.344727},{"lat":64.510643,"lng":186.987305},{"lat":66.089364,"lng":185.625},{"lat":68.089709,"lng":173.847656},{"lat":69.702868,"lng":155.170898},{"lat":70.473553,"lng":143.789063},{"lat":70.466207,"lng":131.704102},{"lat":71.978988,"lng":124.519043},{"lat":72.945431,"lng":104.150391},{"lat":69.9303,"lng":82.265625},{"lat":69.1938,"lng":74.091797},{"lat":68.106102,"lng":68.48877},{"lat":67.634317,"lng":49.921875},{"lat":66.661684,"lng":47.219238},{"lat":66.981666,"lng":40.847168},{"lat":68.815927,"lng":35.947266}];
+				var clip1 = L.polygon(latlngs);
+				
+				gmxMap.layers.forEach((it) => {
+					if (it.getGmxProperties) {
+						let props = it.getGmxProperties();
+						if (props.IsRasterCatalog) {
+							it.addClipPolygon(clip1);
+						}
+					}
+				});
 
 				L.gmx.gmxMapManager.iterateNode(gmxMap.rawTree, function(node, prnt) {
 					let props = node.content.properties,
