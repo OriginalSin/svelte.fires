@@ -182,10 +182,13 @@
 					apiKey = app.apiKey || gmxMap.apiKey || 'Z2SSNR87N4',
 					stateMap = state.map || {},
 					pos = stateMap.position || {},
-                    minZoom = stateMap.minZoom || 1,
-                    maxZoom = stateMap.maxZoom || 21;
+					minZoom = stateMap.minZoom || 1,
+					maxZoom = stateMap.maxZoom || 21;
 
 				// console.log('createMap', it)
+				for (let key in pos) {
+					if(urlParams[key]) { pos[key] = urlParams[key]; }
+				}
 				if(app.theme) {
 					document.body.classList.add(app.theme);
 				}
@@ -210,36 +213,44 @@
 				L.leafletMap = map;
 
 				map.gmxControlsManager.init({
-					gmxDrawing: !app.drawing || app.drawing === 'false' ? null : {position: 'right'},
+					//gmxDrawing: !app.drawing || app.drawing === 'false' ? null : {position: 'right'},
+					gmxDrawing: null,
 					gmxZoom: {position: 'gmxbottomright'},
 					gmxLoaderStatus: {position: 'gmxbottomright'},
 					gmxHide: null
 				});
 				map.gmxControlsManager.setSvgSprites('//www.kosmosnimki.ru/lib/geomixer_1.3/img/svg-symbols.svg');
+				var permalinkIcon = L.control.gmxIcon({
+						id: 'permalink',
+						title: 'Ссылка на карту',
+						position: 'right'
+					})
+					.addTo(map)
+					.on('click', ev => {
+						let center = map.getCenter();
+						let href = `${location.origin}?z=${map.getZoom()}&x=${center.lng}&y=${center.lat}&dt=${picker.getDate().toLocaleDateString()}`;
+						if (navigator.clipboard && navigator.clipboard.writeText) {
+							navigator.clipboard.writeText(href);
+						}
+						location.href = href;
+					});
 
-				if (app.iconSidebar && app.iconSidebar !== 'false') {
-					var iconSidebar = new SidebarControl({position: 'topleft', className: 'sidebarControl'});
-					iconSidebar.addTo(map);
-					iconSidebar.getContainer().classList.add('sidebarControl');
-
-					this.iconSidebar = iconSidebar;
-					if (app.treeView && app.treeView !== 'false') {
-						var treePane = iconSidebar.addTab({id: 'treeView', icon: 'icon-layers', opened: 'opened', closed: 'closed'});
-						// var treeMini = iconSidebar.addTab({id: 'aura', icon: 'icon-layers', opened: 'opened', closed: 'closed'});
-						this.treePane = treePane;
-					}
-				} else {
-					document.body.classList.add('noIconSidebar');
+				let day = 1000*60*60*24;
+				let currentDate = new Date();
+				let dtDate = currentDate;
+				if(urlParams.dt) {
+					dtDate = new Date(urlParams.dt.split('.').reverse());
+					calendar.dateBegin = dtDate.getTime();
+					calendar.dateEnd = calendar.dateBegin + day;
 				}
-				var currentDate = new Date(),
-					currentDateStr = currentDate.toLocaleDateString(),
+				let currentDateStr = currentDate.toLocaleDateString(),
 					_this = this,
-					day = 1000*60*60*24,
 					dCont = document.getElementsByClassName('search-options-period')[0],
 					prev = dCont.getElementsByClassName('pika-prev')[0],
 					next = dCont.getElementsByClassName('pika-next')[0],
 					info = dCont.getElementsByClassName('info')[0],
 					field = dCont.getElementsByClassName('datepicker')[0];
+
 				var picker = new Pikaday({
 					field: field,
 					onSelect: function(date) {
@@ -296,7 +307,7 @@
 				};
 				L.gmx.loadMap(mapID, opt).then(function(gmxMap) {
 					this.gmxMap = gmxMap;
-					let dateInterval = state.calendar || {},
+					let dateInterval = calendar || {},
 						tb = dateInterval.dateBegin,
 						te = dateInterval.dateEnd;
 					if(!tb) {
@@ -424,13 +435,33 @@
 								}
 							}, this);
 						if (picker) {
-							picker.setDate(new Date());
+							picker.setDate(dtDate);
 						} else {
 							gmxMap.setDate(db);
 						}
 
 					}
+					if (app.iconSidebar && app.iconSidebar !== 'false') {
+						var iconSidebar = new SidebarControl({position: 'topleft', className: 'sidebarControl'});
+						iconSidebar.addTo(map);
+						iconSidebar.getContainer().classList.add('sidebarControl');
 
+						this.iconSidebar = iconSidebar;
+						if (app.treeView && app.treeView !== 'false') {
+							var treePane = iconSidebar.addTab('treeView');
+							this._initTree({container: treePane, layersTree: layersTree, rawTree: gmxMap.rawTree, gmxTimeline: this.gmxTimeline});
+
+							//var treePane = iconSidebar.addTab({id: 'treeView', icon: 'icon-layers', opened: 'opened', closed: 'closed'});
+							// var treeMini = iconSidebar.addTab({id: 'aura', icon: 'icon-layers', opened: 'opened', closed: 'closed'});
+							//this.treePane = treePane;
+							this.treePane = iconSidebar.getTab('treeView');
+							this.treePane.innerHTML = '<div data-tab-id="treeView"><i class="icon-layers closed"></i></div>';
+						}
+						iconSidebar.setVisible(false);
+					} else {
+						document.body.classList.add('noIconSidebar');
+					}
+/*
 					if (this.iconSidebar) {
 						let triggerSidebar = (id) => {
 							
@@ -454,7 +485,7 @@
 						};
 						this.iconSidebar.on('change', e => triggerSidebar(e.detail.current));
 					}
-
+*/
 					let bLayersConf = state.baseLayersManager || { activeIDs: gmxMap.properties.BaseLayers };
 					this._initBaseLayers(map, bLayersConf, app);
 				}.bind(this))
