@@ -305,8 +305,9 @@ var FireVirtualLayer = (L.Layer || L.Class).extend({
     initialize: function(options) {
         L.setOptions(this, options);
 
-		var lang = nsGmx && nsGmx.Translations && nsGmx.Translations.getLanguage ? nsGmx.Translations.getLanguage() : 'rus';
+		var lang = nsGmx && nsGmx.Translations && nsGmx.Translations.getLanguage ? nsGmx.Translations.getLanguage() : window.language || 'rus';
 		var titelHash = transHash[lang];
+		this._titelHash = titelHash;
         this._clustersLayer = L.gmx.createLayer({
             properties: {
                 title: 'FireClusters',
@@ -420,7 +421,11 @@ var FireVirtualLayer = (L.Layer || L.Class).extend({
 			}, this);
             event.popup.setContent(cont);
             // event.popup.setContent(div[0]);
-        })
+        });
+		L.gmx.setLanguage = function(lang) {
+			console.log('sssss', window.language);
+			//[]
+		};
     },
 
     onAdd: function(map) {
@@ -463,6 +468,7 @@ var FireVirtualLayer = (L.Layer || L.Class).extend({
             map.removeLayer(this._hotspotLayer);
             map.removeLayer(this._heatmapLayer);
         }.bind(this));
+		// L.gmx.setLanguage = null;
         // map.removeLayer(this._clustersGeomLayer);
         // map.removeLayer(this._clustersLayer);
         // map.removeLayer(this._hotspotLayer);
@@ -493,6 +499,15 @@ var FireVirtualLayer = (L.Layer || L.Class).extend({
             this._observerHeatmap.setBounds(extendedBbox);
         }
     },
+    _balloonEng: function(st) {
+		var out = st;
+		out = out.replace(/Дата/g, 'Date').replace(/Спутник/g, 'Satellite');
+		out = out.replace(/СКАНЭКС/g, 'SCANEX').replace(/Источник/g, 'Source').replace(/Достоверность/g, 'Confidence');
+		out = out.replace(/день/g, 'Day').replace(/ночь/g, 'Night');
+		out = out.replace(/Температура пикс\./g, 'Temperature').replace(/Сила пожара/g, 'Fire Power');
+		out = out.replace(/Вероятный техногенный источник [^)]*\)/g, 'Possible technogenic source');
+		return out;
+    },
 
     //load layers add add observers
     _lazyLoadDataLayers: function() {
@@ -515,8 +530,17 @@ var FireVirtualLayer = (L.Layer || L.Class).extend({
 			var rawClustersLayer = arr[1];
             if (this.options.minHotspotZoom) {
                 var minZoom = this.options.minHotspotZoom;
+                var _balloonEng = this._balloonEng;
                 rawHotspotLayer.setStyles(rawHotspotLayer.getStyles().map(function(style) {
                     style.MinZoom = minZoom;
+					if (window.language === 'eng') {
+						if (!style._Balloon) {
+							style._Balloon = style.Balloon;
+						}
+						style.Balloon = _balloonEng(style._Balloon);
+					} else if (style._Balloon) {
+						style.Balloon = style._Balloon;
+					}
                     return style;
                 }));
             }

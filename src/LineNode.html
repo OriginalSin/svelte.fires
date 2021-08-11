@@ -1,3 +1,5 @@
+{#if !isSkiped}
+
 <li class="line cmd:toggleIcons id:{nodeID} {line.type}" ref:line>
 <div class="mega">
 {#if properties}
@@ -13,13 +15,13 @@
 	<span class="icons ">
 
 		{#if gmxTimeline && properties.Temporal && (properties.IsRasterCatalog || (properties.Quicklook && properties.Quicklook !== 'null'))}
-		<span class="pointer cmd:toggleTimeline cont-timeline disabled" title="Добавить на таймлайн" on:click="toggleTimeline(this)"></span>
+		<span class="pointer cmd:toggleTimeline cont-timeline disabled" title={isEng ? 'Add to timeline' : 'Добавить на таймлайн'} on:click="toggleTimeline(this)"></span>
 		{/if}
 		
 		{#if isInfo}
-		<span class="pointer cmd:showInfo cont-info" title="Метаданные слоя"></span>
+		<span class="pointer cmd:showInfo cont-info" title={isEng ? 'Layer info' : 'Метаданные слоя'}></span>
 		{/if}
- 		<span class="pointer cmd:fitBounds cont-center"  title="Позиционировать"></span>
+ 		<span class="pointer cmd:fitBounds cont-center"  title={isEng ? 'Position' : 'Позиционировать'}></span>
 			
 		
 	</span>
@@ -42,7 +44,7 @@
 			{multiStyles}
 			"
 			on:click="clickOnExpander(this)"
-			>{properties.title}</label>
+			>{nameToEng}</label>
 		<div class="description {properties.description ? '' : 'collapse'}">{@html properties.description || ''}</div>
 		{#if line.type === 'layer'}
 			{#if styles.length && styles.length > 1 && styles[0].RenderStyle}
@@ -72,6 +74,7 @@
 	</ul>
 {/if}
 </li> 
+{/if}
 
 <script>
 
@@ -112,6 +115,13 @@
 			},
 			isVisible: ({line, layersTree}) => {
 				return layersTree.visible[line.content.properties.name];
+			},
+			isSkiped: ({line, layersTree}) => {
+				return layersTree.skiped[line.content.properties.name];
+			},
+			nameToEng: ({ properties }) => { let title = properties.title; return window.language === 'eng' ? title.replace('СКАНЭКС (Россия)', 'SCANEX (Russia)').replace('Пожары', 'Fires') : title; },
+			isEng: ({line}) => {
+				return window.language === 'eng';
 			}
 		},
 		components: {

@@ -1,4 +1,4 @@
-﻿button.findFiresButton
+button.findFiresButton
 {
 	margin-top: 3px;
 	padding: 2px;
@@ -51,4 +51,132 @@
 
 .fireMappletContainer {
     margin-left: 4px;
+}
+
+/*изменить row 7 in https://fires.ru/style.css*/
+.header {
+    height: 48px;
+}
+
+/*изменить row 21 in https://fires.ru/style.css*/
+a.logo {
+    margin-left: -6px;
+}
+
+/*изменить row 36 in https://fires.ru/style.css*/
+.logo_left {
+    transform: scale(0.8);
+    margin-right: 10px;
+    left: 17px;
+    position: relative;
+}
+
+/*изменить row 46 in https://fires.ru/style.css*/
+.logo_right {
+    transform: scale(0.8);
+}	
+
+/*изменить row 72 in https://fires.ru/style.css*/
+a.block_right_1 {
+    color: #4C5567;
+    font-size: 13px;
+}
+
+/*добавить новый стиль в https://fires.ru/style.css*/
+a.block_right_1 span {
+    color: #FCFCFE!important; /*!important обязателен иначе не сработает стиль*/
+    padding: 0 6px 3px 2px;
+    border-radius: 7px;
+    margin-left: 7px;
+    text-transform: lowercase;
+    background: linear-gradient(180deg, #F09634 0%, #EA2223 100%);
+    box-sizing: border-box;
+}
+
+/*изменить row 93 in https://fires.ru/style.css*/
+a.block_right_2 {
+    display: none;
+}
+
+/*изменить row 115 in https://fires.ru/style.css*/
+a.block_right_3 {
+    display: none;
+}
+
+/*изменить row 137 in https://fires.ru/style.css*/
+a.block_right_4 {
+    display: none;
+}
+
+/*изменить row 167 in https://fires.ru/style.css*/
+.dark .scanex-sidebar .tabs {
+    width: 48px;
+}
+
+/*изменить row 179 in https://fires.ru/style.css*/
+.dark .scanex-sidebar .tabs:before {
+	left: 48px;
+}
+
+/*изменить row 4628  in https://fires.ru/resources/css/fires.css*/
+.layout-mapPlaceholder {
+    top: 49px;
+}
+
+/*Убираем инструменты рисования - добавить этот новый стиль, или скрой своим способом*/
+.leaflet-gmx-icon-group.leaflet-gmx-icon-group-drawing.leaflet-gmx-icon-groupSvg.leaflet-gmx-icon-group-vertical.leaflet-control {
+    display: none;
+}
+
+ /*закругляем края на зуммере внизу справа*/
+.leaflet-control-zoom.leaflet-bar.gmxzoom-container.leaflet-control {
+    border-radius: 10px;
+    border: 3px solid #FFF;
+    opacity: 0.95;
+}
+
+/*меняем шрифт и цвет на зуммере внизу справа*/
+.gmxzoom-info {
+    color: #606060;
+    font-family: 'Montserrat';
+    font-weight: 600;
+}
+
+/*добавляем стили для нового хелпера внизу справа*/
+.help-title {
+    background: #FFFFFF;
+    border: 1px solid #E3E8F1;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 319px;
+    height: 71px;
+    position: absolute;
+    top: 80px;
+    right: 172px;
+	/* bottom: 30px; */
+    /* right: 55px; */
+    z-index: 7;
+    color: #6B707B;
+    font-family: 'Montserrat';
+    font-size: 12px;
+    padding: 10px;
+    text-align: left;
+}
+
+/*добавляем стили для нового хелпера внизу справа*/
+.help-title a {
+	font-family: 'Montserrat';
+    color: #777;
+    display: inline;
+    font-size: 12px;
+    float: left;
+    text-align: left;
+    padding: 0;
+    height: auto;
+    border-left: none;
+    line-height: normal;
+}
+
+.leaflet-gmx-location .leaflet-gmx-location-window {
+    right: 44px;
 }

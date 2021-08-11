@@ -161,6 +161,7 @@
 		data() {
 			return {
 				layersTree: {
+					skiped: {},
 					options: {},
 					visible: {},
 					expanded: {}
@@ -201,6 +202,7 @@
 
 				layersTree = state.layersTree || layersTree;
 				layersTree.options = layersTree.options || {};
+				layersTree.skiped = layersTree.skiped || {};
 				this.layersTree = layersTree;
 				let map = new L.Map('map', {
 					srs: 3857,
@@ -211,6 +213,14 @@
 					maxZoom: maxZoom
 				});
 				L.leafletMap = map;
+				map._getHref = function() {
+					let center = map.getCenter();
+					let href = `${location.origin}?z=${map.getZoom()}&x=${center.lng}&y=${center.lat}&dt=${picker.getDate().toLocaleDateString()}`;
+					if (window.language === 'eng') {
+						href += '&lang=eng';
+					}
+					return href;
+				}
 
 				map.gmxControlsManager.init({
 					//gmxDrawing: !app.drawing || app.drawing === 'false' ? null : {position: 'right'},
@@ -222,13 +232,12 @@
 				map.gmxControlsManager.setSvgSprites('//www.kosmosnimki.ru/lib/geomixer_1.3/img/svg-symbols.svg');
 				var permalinkIcon = L.control.gmxIcon({
 						id: 'permalink',
-						title: 'Ссылка на карту',
+						title: window.language === 'eng' ? 'Link to map' : 'Ссылка на карту',
 						position: 'right'
 					})
 					.addTo(map)
 					.on('click', ev => {
-						let center = map.getCenter();
-						let href = `${location.origin}?z=${map.getZoom()}&x=${center.lng}&y=${center.lat}&dt=${picker.getDate().toLocaleDateString()}`;
+						let href = map._getHref();
 						if (navigator.clipboard && navigator.clipboard.writeText) {
 							navigator.clipboard.writeText(href);
 						}
@@ -251,7 +260,7 @@
 					info = dCont.getElementsByClassName('info')[0],
 					field = dCont.getElementsByClassName('datepicker')[0];
 
-				var picker = new Pikaday({
+				let optp = {
 					field: field,
 					onSelect: function(date) {
 						var dStr = date.toLocaleDateString(),
@@ -265,36 +274,32 @@
 						if (dayPast24) {
 							str = flagDay ? 'За последние 24+' + currentDate.getUTCHours() + 'ч (UTC)' : 'За последние ' + currentDate.getUTCHours() + 'ч (UTC)';
 						}
+						if (window.language === 'eng') {
+							str = str.replace('За последние', 'Last').replace('За', 'Last').replace('ч', 'h');
+						}
 						info.innerHTML = str;
 						_this.gmxMap.setDate(date);
-
-						// var beg = date.getTime() / 1000,
-							// interval = [beg, beg + 60*60*24];
-						// console.log('sssssss', interval, new Date(1000 * interval[0]), new Date(1000 * interval[1]))
 					},
-					
-					i18n: {
+					minDate: new Date(currentDate.getTime() - 3*day),
+				};
+				if (window.language !== 'eng') {
+					optp.i18n = {
 						previousMonth : 'Предыдущий месяц',
 						nextMonth     : 'Следующий месяц',
 						months        : ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
 						weekdays      : ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],
 						weekdaysShort : ['Вс','Пн','Вт','Ср','Чт','Пт','Сб']
-					},
-					//format: 'DD.MM.YYYY',
-					//yearRange: 20,
+					};
+				}
 
-			//        firstDay: 1,
-					minDate: new Date(currentDate.getTime() - 3*day),
-					//maxDate: new Date(2020, 12, 31),
-					//yearRange: [2000,2020]
-				});
+				const picker = new Pikaday(optp);
 				L.DomEvent.on(prev, 'click', function() {
 					picker.setDate(new Date(picker.getDate().getTime() - day));
 				});
 				L.DomEvent.on(next, 'click', function() {
 					picker.setDate(new Date(picker.getDate().getTime() + day));
 				});
-				map.gmxControlsManager.get('logo').getContainer().setAttribute('href', 'http://scanex.ru');
+				//map.gmxControlsManager.get('logo').getContainer().setAttribute('href', 'http://scanex.ru');
 				
 				this.mapID = mapID;
 				let opt = {
@@ -305,6 +310,12 @@
 					// ,
 					// visibility: layersTree.visible || {}
 				};
+				let skipIds = {
+					'5D0204D1C4934E5CAE2D72E0F9CF9E67': 'Статистика по регионам (ml)',
+					'C8C863EFBEC6498C8AACA932510BD79B': 'Границы заповедников',
+					'109DAC5FEB7641B9B7D59DE692A5B867': 'Административно-территориальное деление РФ'
+				};
+
 				L.gmx.loadMap(mapID, opt).then(function(gmxMap) {
 					this.gmxMap = gmxMap;
 					let dateInterval = calendar || {},
@@ -338,6 +349,13 @@
 								let props = it.getGmxProperties(),
 									id = props.name,
 									timeLineFlag = gmxTimeline && gmxTimeline.getLayerState(id);
+								if (window.language === 'eng' && skipIds[id]) {
+									map.removeLayer(it);
+									layersTree.skiped[id] = true;
+									return;
+								} else {
+									delete layersTree.skiped[id];
+								}
 								if (!timeLineFlag) {
 									if (it.setDateInterval) {
 										it.setDateInterval(db, de);
@@ -395,7 +413,7 @@
 						/* TimeLine */
 						window.nsGmx.gmxTimeLine.afterViewer({gmxMap: gmxMap}, map);
 						var control = L.control.gmxTimeline({
-							locale: 'ru',
+							locale: window.language === 'eng' ? 'en' : 'ru',
 							moveable: true
 							}).on('dateInterval', function (ev) {
 								gmxMap.layersByID[ev.layerID].setDateInterval(ev.beginDate, ev.endDate);
@@ -448,44 +466,13 @@
 
 						this.iconSidebar = iconSidebar;
 						if (app.treeView && app.treeView !== 'false') {
-							var treePane = iconSidebar.addTab('treeView');
+							var treePane = iconSidebar.addTab({id: 'treeView', icon: 'icon-layers', opened: 'opened', closed: 'closed'});
 							this._initTree({container: treePane, layersTree: layersTree, rawTree: gmxMap.rawTree, gmxTimeline: this.gmxTimeline});
-
-							//var treePane = iconSidebar.addTab({id: 'treeView', icon: 'icon-layers', opened: 'opened', closed: 'closed'});
-							// var treeMini = iconSidebar.addTab({id: 'aura', icon: 'icon-layers', opened: 'opened', closed: 'closed'});
-							//this.treePane = treePane;
-							this.treePane = iconSidebar.getTab('treeView');
-							this.treePane.innerHTML = '<div data-tab-id="treeView"><i class="icon-layers closed"></i></div>';
+							this.treePane = treePane;
 						}
-						iconSidebar.setVisible(false);
 					} else {
 						document.body.classList.add('noIconSidebar');
 					}
-/*
-					if (this.iconSidebar) {
-						let triggerSidebar = (id) => {
-							
-							if (id === 'treeView') {
-								shiftIconLayers = true;
-								if (treePane) {
-									this._initTree({container: treePane, layersTree: layersTree, rawTree: gmxMap.rawTree, gmxTimeline: this.gmxTimeline});
-								}
-							} else {
-								shiftIconLayers = false;
-								if (treePane) {
-									treePane.innerHTML = '';
-								}
-							}
-							if (this.IconLayersContainer) {
-								this.IconLayersContainer.classList[shiftIconLayers ? 'add' : 'remove']('shiftIconLayers');
-							}
-							if (repaintTimeline) {
-								repaintTimeline();
-							}
-						};
-						this.iconSidebar.on('change', e => triggerSidebar(e.detail.current));
-					}
-*/
 					let bLayersConf = state.baseLayersManager || { activeIDs: gmxMap.properties.BaseLayers };
 					this._initBaseLayers(map, bLayersConf, app);
 				}.bind(this))
@@ -493,7 +480,11 @@
 				this.set({map: map, config: it});
 			},
 			_initBaseLayers(map, baseLayers, app) {
-				const lang = 'rus';
+				const lang = window.language || 'rus';
+				if (lang === 'eng') {
+					baseLayers.currentID = 'OSM_old';
+					baseLayers.activeIDs = ['OSM_old'];
+				}
 				let blm = map.gmxBaseLayersManager,
 					activeIDs = baseLayers.activeIDs || ['sputnik'],
 					currentID = baseLayers.currentID || activeIDs[0];
@@ -596,11 +587,6 @@
 						if (cmd === 'fitBounds') {
 							if (gmxLayer.getBounds) {
 								let bounds = gmxLayer.getBounds();
-									// zoom = map.getBoundsZoom(bounds),
-									// opt = gmxLayer.options;
-								// zoom = zoom < opt.minZoom ? opt.minZoom : (zoom > opt.maxZoom ? opt.maxZoom : zoom);
-								// map.setView(bounds.getCenter(), zoom);
-
 								map.fitBounds(bounds, {	// maxZoom от М.Потанина
 									animation: false,
 									maxZoom: Math.min(Math.max(15, map.getZoom()), map.getBoundsZoom(bounds))
@@ -625,48 +611,11 @@
 								desc = getContent();
 
 							if (desc) {
-								
 								let gmxPopup = L.control.gmxPopup({content: desc}).openOn(map),
 									cont = gmxPopup.getContainer(),
 									p = L.DomUtil.getPosition(cont);
 									
 								L.DomUtil.setPosition(cont, {x: Math.floor(p.x), y: Math.floor(p.y)});
-								//map.gmxControlsManager.add(gmxPopup);
-/*
-								let popup = L.popup(),
-									latlng = map.getCenter(),
-									onAdd = () => {
-										let ww = 300,
-											maxChild = null,
-											h = L.point(0,0),
-											offset = [0, 0],
-											container = popup._contentNode,
-											arr = container.childNodes;
-										for(let i = 0, len = arr.length; i < len; i++) {
-											let it = arr[i],
-												w = it.clientWidth;
-											if (w > ww) {
-												maxChild = it;
-												ww = w;
-											}
-										}
-										if (maxChild) {
-											popup.options.maxHeight = map.getContainer().clientHeight - 100;
-											popup.options.maxWidth = maxChild.clientWidth;
-											popup.options.offset = L.point(maxChild.clientWidth / 2, container.clientHeight / 2);
-											popup
-												.remove()
-												.off('add', onAdd, this)
-												.openOn(map);
-										}
-									};
-									
-								popup
-									.on('add', onAdd, this)
-									.setLatLng(latlng)
-									.setContent(desc)
-									.openOn(map);
-									*/
 							}
 						} else if (cmd === 'toggleNode') {
 							let flag = ev.set;
